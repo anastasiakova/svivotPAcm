@@ -1,71 +1,161 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="styles.css">
- 
+  <link rel="stylesheet" href="layout.css">
 </head>
-
+<header>
+        <img src="logo.png" width="150" />
+         <small >Anastasia Kovalkov & Saar Gutman</small>  
+</header>
+                     
 <body>		
-		<header id="header">
-			<div class="innertube">
-                <img src="logo.png" alt="logo" ><img/>
-                    Anastasia Kovalkov & Saar Gutman</p>
-			</div>
-		</header>
-		
-		<div id="wrapper">
-			<main>
-				<div id="content">
-                      
-					<div class="innertube">
-                        <!-- game -->
-                        <!-- <div>
-                            <input id="lblScore" type="text"/>
-                            <br/>
-                            TIME:
-                            <input id="lblTime" type="text"/>
-                            <br/>
-                            <canvas id="canvas" height="600" width="600"></canvas>
-                            
-                        </div> -->
+        <div id="wrapper">
+                              
+                <nav>
+                         <li><a href="#">Welcom</a></li>
+                         <li><a href="#">Sign Up</a></li>
+                         <li><a href="#">Log In</a></li>
+                         <li><a href="#">About</a></li>
+          
+                </nav>
 
-                        <!-- welcom -->
-                        <div class= "welcom">
+                <!-- welcom -->
+                <!-- <section style="margin-left:40%;">
+                                <img src="logo.png" width="200" />
                                 <div class="button up">
                                         <p>Log In</p>
                                 </div> 
+                                <br/>
                                 <div class="button">
-                                        <p>Registration</p>
+                                       <p>Registration</p>
                                 </div>       
-                                      <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-                                      <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.12.1/TweenMax.min.js"></script>
-                                      <script type="text/javascript" src="pacman.js"></script></div>
-                         </div>
-				</div>
-			</main>
-			
-			<nav id="nav">
-				<div class="innertube">
-					<h3>Left heading</h3>
-					<ul>
-						<li><a href="#">Welcom</a></li>
-						<li><a href="#">Registration</a></li>
-						<li><a href="#">Log In</a></li>
-						<li><a href="#">About</a></li>
-					</ul>
-				</div>
-			</nav>
-		
-       
+                                              
+                                <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+                                <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.12.1/TweenMax.min.js"></script>
+                                 <script type="text/javascript" src="buttons.js"></script>
+                </section>  -->
+                <!-- pacman -->
+                <!-- <section style="margin-left:40%; color: white;">
+                                <input id="lblScore" type="text"/>
+                                <br/>
+                                TIME:
+                                <input id="lblTime" type="text"/>
+                                <br/>
+                                <canvas id="canvas" height="600" width="600"></canvas>
+                                <script type="text/javascript" src="pacman.js"></script>
+                </section>  -->
+                <!-- sign up -->
+                <!-- <section style="margin-right:20%; color: azure;">
+                        <form class="form-style-9">
+                                 <ul>
+                                         <li>
+                                         <input type="text" name="userName" class="field-style field-split align-left" 
+                                         placeholder="User Name" />
+                                         <input type="password" name="password" class="field-style field-split align-right" 
+                                         placeholder="Password" />
+                                        </li>
 
+                                        <li>
+                                         <input type="text" name="privateName" class="field-style field-split align-left" 
+                                         placeholder="Private Name" />
+                                         <input type="text" name="lastName" class="field-style field-split align-right" 
+                                         placeholder="Last Name" />
+                                        </li>
+
+                                         <li>
+                                         <input type="email" name="email" class="field-style field-split align-right" 
+                                          placeholder="Email" />  
+                                         <input type="date" name="birthday" class="field-style field-split align-left" 
+                                         placeholder="Birthday" /> 
+                                         </li>
+
+                                        <li>
+                                        <input type="submit" value="Sign Up" />
+                                        </li>
+                                 </ul>                                                              
+                        </form>
+                </section> -->
+                <!-- log in -->
+                <!-- <section style="margin-right:20%; color: azure;">
+                        <form class="form-style-9">
+                                <ul>
+                                <li>
+                                 <input type="text" name="userName" class="field-style field-split align-left" 
+                                  placeholder="User Name" />
+                                 <input type="password" name="password" class="field-style field-split align-right" 
+                                  placeholder="Password" />
+                                 </li>
+
+                                 <li>
+                                   <input type="submit" value="Log In" />
+                                </li>
+                               </ul>                                                              
+                        </form>
+               </section>
+          -->
+          <!-- config -->
+                <section style="margin-right:20%; color: azure;">
+                        <form class="form-style-9">
+                                <ul>
+                                        <!-- is keys default -->
+                                        <li>
+                                             <label for="defultKeys">
+                                                        Default Arrow Kyes
+                                             </label>
+                                             <input type="checkbox" name="defultKeys" id= "defultKeys" checked="true"/>
+                                         </li>
+                                <!--choose keys  -->
+                                <li>
+                                 <label for="keys" class="label-center"> Up Move 
+                                         <input type="text" name="keysup" class="field-style field-style-small"
+                                        placeholder="Enter Key" ></input>
+                                </label>
+                                <label for="keys"> Down Move 
+                                                <input type="text" name="keysdown" class="field-style field-style-small"
+                                               placeholder="Enter Key" ></input>
+                                       </label>
+                                </li>
+                                <li>
+                                 <label for="keys" class="label-center"> Left Move 
+                                         <input type="text" name="keysleft" class="field-style field-style-small"
+                                        placeholder="Enter Key" ></input>
+                                </label>
+                                <label for="keys"> Right Move 
+                                                <input type="text" name="keysright" class="field-style field-style-small"
+                                               placeholder="Enter Key" ></input>
+                                 </label>
+                                </li>
+                                   <!-- anount of balls -->
+                                <li>
+                                        <label for="ballsRange">
+                                             Choose Balls Amount
+                                        </label>
+                                         <input type="range" name="ballsRange" min="50" value = "70" max="90" id= "ballsRange"
+                                         oninput = "Output.value = ballsRange.value" class="align-left field-split-large"/>
+                                         <input type="number" style="text-align: center" name="Output" id="Output" value = "70" min="50" max="90" oninput = "ballsRange.value = Output.value"
+                                         class="field-style align-right field-split-small">
+                                        </input>
+                                 </li>
+                                 <!-- balls colors and rank -->
+                                 <li>
+                                        <label for="ballsRange">
+                                             Choose Balls Amount
+                                        </label>
+                                         <input type="range" name="ballsRange" min="50" value = "70" max="90" id= "ballsRange"
+                                         oninput = "Output.value = ballsRange.value" class="align-left field-split-large"/>
+                                         <input type="number" style="text-align: center" name="Output" id="Output" value = "70" min="50" max="90" oninput = "ballsRange.value = Output.value"
+                                         class="field-style align-right field-split-small">
+                                        </input>
+                                </li>
+                                <li>
+                                   <input type="submit" value="Save" />
+                                </li>
+                               </ul>                                                              
+                        </form>
+               </section>
         </div>
-
-		<footer id="footer">
-			<!-- <div class="innertube"> -->
-                <p>Kovalkov@post.bgu.ac.il</p>
-                <p>saar mail</p>
-			<!-- </div> -->
-		</footer>
-	
-	</body>
+        <footer>
+                <p>Kovalkov@post.bgu.ac.il</p>        
+         </footer>
+</body>		
 </html>
