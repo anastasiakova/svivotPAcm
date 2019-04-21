@@ -5,22 +5,23 @@
 </head>
 <header>
         <img src="logo.png" width="150" />
-         <small >Anastasia Kovalkov & Saar Gutman</small>  
+         <small >Anastasia Kovalkov & Saar Guttman</small>  
 </header>
                      
-<body>		
+<body onload="toggleVisibility('Welcome')">		
         <div id="wrapper">
-                              
+                <script type="text/javascript" src="menu.js"></script>           
                 <nav>
-                         <li><a href="#">Welcom</a></li>
-                         <li><a href="#">Sign Up</a></li>
-                         <li><a href="#">Log In</a></li>
-                         <li><a href="#">About</a></li>
+                         <li><a href="#" onclick="toggleVisibility('Welcome')">Welcome</a></li>
+                         <li><a href="#" onclick="toggleVisibility('SignUp')">Sign Up</a></li>
+                         <li><a href="#" onclick="toggleVisibility('LogIn')">Log In</a></li>
+                         <li><a href="#" onclick="toggleVisibility('Settings')">Settings</a></li>
+                         <li><a href="#" onclick="toggleVisibility('About')">About</a></li>
           
                 </nav>
-
-                <!-- welcom -->
-                <!-- <section style="margin-left:40%;">
+                <div id="Welcome" class="txt">
+                <!-- welcome -->
+                <section style="margin-left:40%;">
                                 <img src="logo.png" width="200" />
                                 <div class="button up">
                                         <p>Log In</p>
@@ -33,7 +34,8 @@
                                 <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
                                 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.12.1/TweenMax.min.js"></script>
                                  <script type="text/javascript" src="buttons.js"></script>
-                </section>  -->
+                </section> 
+                </div>
                 <!-- pacman -->
                 <!-- <section style="margin-left:40%; color: white;">
                                 <input id="lblScore" type="text"/>
@@ -44,8 +46,9 @@
                                 <canvas id="canvas" height="600" width="600"></canvas>
                                 <script type="text/javascript" src="pacman.js"></script>
                 </section>  -->
+                <div id="SignUp" class="txt">
                 <!-- sign up -->
-                <!-- <section style="margin-right:20%; color: azure;">
+                <section style="margin-right:20%; color: azure;">
                         <form class="form-style-9">
                                  <ul>
                                          <li>
@@ -74,26 +77,29 @@
                                         </li>
                                  </ul>                                                              
                         </form>
-                </section> -->
+                </section>
+                </div> 
+                <div id="LogIn" class="txt">
                 <!-- log in -->
-                <!-- <section style="margin-right:20%; color: azure;">
-                        <form class="form-style-9">
-                                <ul>
-                                <li>
-                                 <input type="text" name="userName" class="field-style field-split align-left" 
-                                  placeholder="User Name" />
-                                 <input type="password" name="password" class="field-style field-split align-right" 
-                                  placeholder="Password" />
-                                 </li>
+                        <section style="margin-right:20%; color: azure;">
+                                <form class="form-style-9">
+                                        <ul>
+                                        <li>
+                                        <input type="text" name="userName" class="field-style field-split align-left" 
+                                        placeholder="User Name" />
+                                        <input type="password" name="password" class="field-style field-split align-right" 
+                                        placeholder="Password" />
+                                        </li>
 
-                                 <li>
-                                   <input type="submit" value="Log In" />
-                                </li>
-                               </ul>                                                              
-                        </form>
-               </section>
-          -->
+                                        <li>
+                                        <input type="submit" value="Log In" />
+                                        </li>
+                                        </ul>                                                              
+                                </form>
+                        </section>
+                </div>
           <!-- config -->
+                <div id="Settings" class="txt">
                 <section style="margin-right:20%; color: azure;">
                         <form class="form-style-9">
                                 <ul>
@@ -125,7 +131,7 @@
                                                placeholder="Enter Key" ></input>
                                  </label>
                                 </li>
-                                   <!-- anount of balls -->
+                                   <!-- number of balls -->
                                 <li>
                                         <label for="ballsRange">
                                              Choose Balls Amount
@@ -135,6 +141,10 @@
                                          <input type="number" style="text-align: center" name="Output" id="Output" value = "70" min="50" max="90" oninput = "ballsRange.value = Output.value"
                                          class="field-style align-right field-split-small">
                                         </input>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <br>
                                  </li>
                                  <!-- balls colors and rank -->
                                  <li>
@@ -146,16 +156,53 @@
                                          <input type="number" style="text-align: center" name="Output" id="Output" value = "70" min="50" max="90" oninput = "ballsRange.value = Output.value"
                                          class="field-style align-right field-split-small">
                                         </input>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <br>
+                                </li>
+                                <!-- Game time limitation -->
+                                <li>
+                                        <label for="timeLimitation">
+                                             Choose time limit
+                                        </label>
+                                         <input type="range" name="timeLimitation" min="60" value = "70" max="180" id= "timeLimitation"
+                                         oninput = "Output.value = timeValue.value" class="align-left field-split-large"/>
+                                         <input type="number" style="text-align: center" name="Output" id="Output" value = "70" min="60" max="180" oninput = "timeLimitation.value = Output.value"
+                                         class="field-style align-right field-split-small">
+                                        </input>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <br>
+                                </li>
+                                <li>
+                                        <lable for="numOfMonsters">
+                                                Choose number of monsters
+                                        </lable>
+                                        <form>
+                                                <br>
+                                                <input type="radio" name="numOfMonsters" value="1" checked> 1 - Easy
+                                                <input type="radio" name="numOfMonsters" value="2"> 2 - Hard
+                                                <input type="radio" name="numOfMonsters" value="3"> 3 - Crazy
+                                        </form>
                                 </li>
                                 <li>
                                    <input type="submit" value="Save" />
+                                   <input type="button" value = "Random Settings" />
                                 </li>
                                </ul>                                                              
                         </form>
                </section>
+               </div>
         </div>
-        <footer>
-                <p>Kovalkov@post.bgu.ac.il</p>        
-         </footer>
+        <div class="footer">
+                        <footer>
+                                <p>Kovalkov@post.bgu.ac.il</p>  
+                                <p>saarzeev@post.bgu.ac.il</p>      
+                        </footer>
+        </div>
+
+
 </body>		
 </html>

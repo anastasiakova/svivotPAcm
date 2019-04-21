@@ -18,6 +18,12 @@ body {
     color: azure;
 }
 
+#footer {
+    background: black;
+    height: 5%;
+    color: azure;
+}
+
 #header h1 {
     margin: 0;
     padding-top: 15px;
@@ -123,4 +129,12 @@ nav ul a {
 
 .up{
     margin-top: 20%;
+}
+
+.content {
+    display: none;
+}
+
+#Welcome {
+    display: block;
 }

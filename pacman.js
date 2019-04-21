@@ -160,4 +160,39 @@ function UpdatePosition() {
     }
 }
 
+function GameSettings(){
+    this.moveUp = 'ArrowUp';
+    this.moveDown = 'ArrowDown';
+    this.moveLeft = 'ArrowLeft';
+    this.moveRight = 'ArrowRight';
 
+    this.ballRange = '70';
+    this.timeLimitation = '60';
+    this.numOfMonsters = '1';
+
+    this.RandomizeSettings = function(){
+        this.ballRange = Math.floor((Math.random() * 90) + 50);
+        this.timeLimitation = Math.floor((Math.random() * 180) + 60);
+        this.numOfMonsters = Math.floor((Math.random() * 3) + 1);
+    }
+
+    this.setBallRange = function(rng){
+        if (50 <= rng && rng <= 90){
+            this.ballRange = rng;
+        }
+    }
+
+    this.setTimeLimitation = function(limit){
+        if(60 <= limit && limit <= 180){
+            this.timeLimitation = limit;
+        }
+        
+    }
+
+    this.setNumOfMonsters = function(monsters){
+        if (1 <= monsters && monsters <= 3){
+            this.numOfMonsters = monster;
+        }
+        
+    }
+}
