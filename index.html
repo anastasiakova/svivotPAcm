@@ -2,6 +2,7 @@
 <html>
 <head>
   <link rel="stylesheet" href="layout.css">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <header>
         <img src="logo.png" width="150" />
@@ -21,7 +22,7 @@
                 </nav>
                 <div id="Welcome" class="txt">
                 <!-- welcome -->
-                <section style="margin-left:40%;">
+                <section  class ="footer" style="margin-left:40%;">
                                 <img src="logo.png" width="200" />
                                 <div class="button up">
                                         <p>Log In</p>
@@ -104,41 +105,53 @@
                         <form class="form-style-9">
                                 <ul>
                                         <!-- is keys default -->
-                                        <li>
+                                        <!-- <li>
                                              <label for="defultKeys">
                                                         Default Arrow Kyes
                                              </label>
                                              <input type="checkbox" name="defultKeys" id= "defultKeys" checked="true"/>
-                                         </li>
+                                         </li> -->
                                 <!--choose keys  -->
                                 <li>
-                                 <label for="keys" class="label-center"> Up Move 
-                                         <input type="text" name="keysup" class="field-style field-style-small"
-                                        placeholder="Enter Key" ></input>
-                                </label>
-                                <label for="keys"> Down Move 
-                                                <input type="text" name="keysdown" class="field-style field-style-small"
-                                               placeholder="Enter Key" ></input>
+                                        <label> Up Move: 
+                                                Default - up arrow <input type="checkbox" name="defaultKeys" id= "defaultUp" checked="true" />
+                                                <input type="text" name="keysup" id= "keysup" class="field-style field-style-small"
+                                                placeholder="Enter Key"></input>
+                                                <script>toggleKeysPickerVisability("defaultUp","keysup");</script> 
+                                        </label>
+                                </li>
+                                <li>
+                                        <label> Down Move:
+                                                Default - down arrow <input type="checkbox" name="defaultKeys" id= "defaultDown" checked="true"/>
+                                                <input type="text" name="keysdown" id="keysdown" class="field-style field-style-small"
+                                                 placeholder="Enter Key" ></input>
+                                               <script>toggleKeysPickerVisability("defaultDown","keysdown");</script> 
                                        </label>
                                 </li>
                                 <li>
-                                 <label for="keys" class="label-center"> Left Move 
-                                         <input type="text" name="keysleft" class="field-style field-style-small"
-                                        placeholder="Enter Key" ></input>
-                                </label>
-                                <label for="keys"> Right Move 
-                                                <input type="text" name="keysright" class="field-style field-style-small"
+                                        <label> Left Move:
+                                        Default - left arrow <input type="checkbox" name="defaultKeys" id= "defaultLeft" checked="true"/>
+                                                <input type="text" name="keysleft" id="keysleft" class="field-style field-style-small"
+                                                placeholder="Enter Key" ></input>
+                                                <script>toggleKeysPickerVisability("defaultLeft","keysleft");</script> 
+                                        </label>
+                                </li>
+                                <li>
+                                        <label> Right Move:
+                                                 Default - right arrow <input type="checkbox" name="defaultKeys" id= "defaultRight" checked="true"/>
+                                                <input type="text" name="keysright" id="keysright" class="field-style field-style-small"
                                                placeholder="Enter Key" ></input>
-                                 </label>
+                                               <script>toggleKeysPickerVisability("defaultRight","keysright");</script> 
+                                         </label>
                                 </li>
                                    <!-- number of balls -->
                                 <li>
-                                        <label for="ballsRange">
+                                        <label>
                                              Choose Balls Amount
                                         </label>
                                          <input type="range" name="ballsRange" min="50" value = "70" max="90" id= "ballsRange"
-                                         oninput = "Output.value = ballsRange.value" class="align-left field-split-large"/>
-                                         <input type="number" style="text-align: center" name="Output" id="Output" value = "70" min="50" max="90" oninput = "ballsRange.value = Output.value"
+                                         oninput = "ballsRangeOutput.value = ballsRange.value" class="align-left field-split-large"/>
+                                         <input type="number" style="text-align: center" name="ballsRangeOutput" id="ballsRangeOutput" value = "70" min="50" max="90" oninput = "ballsRange.value = ballsRangeOutput.value"
                                          class="field-style align-right field-split-small">
                                         </input>
                                         <br>
@@ -148,27 +161,32 @@
                                  </li>
                                  <!-- balls colors and rank -->
                                  <li>
-                                        <label for="ballsRange">
-                                             Choose Balls Amount
-                                        </label>
-                                         <input type="range" name="ballsRange" min="50" value = "70" max="90" id= "ballsRange"
-                                         oninput = "Output.value = ballsRange.value" class="align-left field-split-large"/>
-                                         <input type="number" style="text-align: center" name="Output" id="Output" value = "70" min="50" max="90" oninput = "ballsRange.value = Output.value"
-                                         class="field-style align-right field-split-small">
-                                        </input>
-                                        <br>
-                                        <br>
-                                        <br>
-                                        <br>
-                                </li>
+                                 <label>
+                                        Choose Balls Color
+                                 </label>                
+                                 <div class="grid">
+                                         <div style="margin: 20px; height: 70px;">
+                                                25 Points
+                                                <input type="color" id="twentyFiveBallColor" name="head">
+                                        </div>
+                                        <div style="margin: 20px; height: 70px;">
+                                                15 Points    
+                                                <input type="color" id="fifteenBallColor" name="head">
+                                        </div>
+                                        <div style="margin: 20px; height: 70px;">
+                                               5 Points
+                                               <input type="color" id="fiveBallColor" name="head">
+                                        </div>
+                                 </li>
+
                                 <!-- Game time limitation -->
                                 <li>
                                         <label for="timeLimitation">
                                              Choose time limit
                                         </label>
-                                         <input type="range" name="timeLimitation" min="60" value = "70" max="180" id= "timeLimitation"
-                                         oninput = "Output.value = timeValue.value" class="align-left field-split-large"/>
-                                         <input type="number" style="text-align: center" name="Output" id="Output" value = "70" min="60" max="180" oninput = "timeLimitation.value = Output.value"
+                                         <input type="range" name="timeLimitation" min="60" value = "60" max="300" id= "timeLimitation"
+                                         oninput = "timeLimitationOutput.value = timeLimitation.value" class="align-left field-split-large"/>
+                                         <input type="number" style="text-align: center" name="timeLimitationOutput" id="timeLimitationOutput" value = "60" min="60" oninput = "timeLimitation.value = timeLimitationOutput.value"
                                          class="field-style align-right field-split-small">
                                         </input>
                                         <br>
@@ -180,16 +198,17 @@
                                         <lable for="numOfMonsters">
                                                 Choose number of monsters
                                         </lable>
-                                        <form>
+                                        <form> 
                                                 <br>
-                                                <input type="radio" name="numOfMonsters" value="1" checked> 1 - Easy
+                                                <input type="radio" name="numOfMonsters" value="1" checked>  1 - Easy
                                                 <input type="radio" name="numOfMonsters" value="2"> 2 - Hard
                                                 <input type="radio" name="numOfMonsters" value="3"> 3 - Crazy
                                         </form>
                                 </li>
                                 <li>
-                                   <input type="submit" value="Save" />
-                                   <input type="button" value = "Random Settings" />
+                                   <input type="button" value = "Random Settings" onclick="randomSettings()" style="margin-left: 22%" />
+                                   <input type="submit" value = "Save" onclick="setSettings()"/>
+                                   <script type="text/javascript" src="pacman.js"></script>
                                 </li>
                                </ul>                                                              
                         </form>
@@ -198,8 +217,9 @@
         </div>
         <div class="footer">
                         <footer>
-                                <p>Kovalkov@post.bgu.ac.il</p>  
-                                <p>saarzeev@post.bgu.ac.il</p>      
+                                <p>Kovalkov@post.bgu.ac.il</p> 
+                               
+                                <p>Saarzeev@post.bgu.ac.il</p>      
                         </footer>
         </div>
 

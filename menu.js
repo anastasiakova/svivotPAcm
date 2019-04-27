@@ -13,3 +13,18 @@ function toggleVisibility(selectedTab) {
         }
 
 }
+
+function toggleKeysPickerVisability(checkbox, hidden) {
+    var checkbox = $(`#${checkbox}`);
+    var hidden = $(`#${hidden}`);
+    hidden.hide();
+    checkbox.change(function() {
+            if (checkbox.is(':checked')) {
+            hidden.hide();
+            hidden.attr('required', false);
+            } else {
+            hidden.show();
+            hidden.attr('required', true);
+            }
+    });
+}

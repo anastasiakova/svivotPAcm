@@ -14,7 +14,8 @@ header{
 }
 @media screen and (min-width:600px) {
     nav {
-     float: left;
+     position: absolute;
+     /* float: left; */
       width: 10%;
     }
     section {
@@ -25,7 +26,6 @@ header{
   @media screen and (max-width:599px) {
     nav li {
       display: inline;
-      
     }
   }
 
@@ -59,11 +59,15 @@ header{
 .button {
     background: #3498db;
     width: 180px;
+    text-align: center;
     padding: 4px 0;
     transform: translateX(-50%) translateY(-50%);
     border-radius: 3px;
+    margin: -10px 0 0 100px;
   }
-
+section img{
+  margin: -50px 0 0 -100px;
+}
   .button p {
     font-family: 'Roboto'; 
     text-align: center;
@@ -109,8 +113,8 @@ header{
 }
 .form-style-9 ul li{
 	display: block;
-	margin-bottom: 10px;
-	min-height: 35px;
+    min-height: 35px;
+    margin: 10px 0; 
 }
 .form-style-9 ul li  .field-style{
     box-sizing: border-box; 
@@ -269,3 +273,30 @@ input[type=range] {
 .form-style-9 ul li .field-split-small{
 	width: 20%;
 }
+
+footer{
+   position: absolute;
+   margin: 30% 40%;
+   color: azure;
+}
+
+  .grid {
+    display: grid;
+    grid-gap: 3px;
+    grid-template-columns: 120px 120px 120px;
+    grid-template-rows: 100px;
+    margin-left: 10px;
+    
+  }
+  
+  [class^="item"] {
+    border: 3px solid #48ABFF;
+    border-radius: 20px;
+    margin: 5px 10px;
+    /* height: 15px;
+    width: 15px; */
+    background-color: #48ABFF;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 10px; 
+  }
