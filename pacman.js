@@ -8,26 +8,28 @@
 // var interval;
 
 var settings = {
-    // keye
-    upKey: String,
-    downKey: String,
-    leftKey: String,
-    rightKey: String,
+    // keys
+
+    upKey: 38,
+    downKey: 40,
+    leftKey: 37,
+    rightKey: 39,
 
     // balls
-    twentyFiveBallColor: String,
-    fifteenBallColor: String, 
-    fiveBallColor: String,
+    twentyFiveBallColor: "Green",
+    fifteenBallColor:"Pink", 
+    fiveBallColor:  "Blue",
 
-    twentyFiveBallAmount: Number,
-    fifteenBallAmount: Number,
-    fiveBallAmount: Number,
+    totalNumOfBalls: 90,
+    twentyFiveBallAmount : Math.round(70*0.1),
+    fifteenBallAmount : Math.round(70*0.3),
+    fiveBallAmount: Math.round(70*0.6),
 
     // time
-    timeLimitation: Number,
+    timeLimitation : 80,
 
     // monsters
-    numberOfMonsters: Number
+    numberOfMonsters : 3
 };
 
 function setKeysValue(key, keyVal ,textVal){
@@ -35,6 +37,13 @@ function setKeysValue(key, keyVal ,textVal){
         return keyVal;
     }
     return textVal.val();
+}
+
+function loadSettings(){
+    $('#timeLimitationRange')[0].value = settings.timeLimitation;
+    $('#timeLimitationOutput')[0].value = settings.timeLimitation;
+    $('#ballsRangeOutput')[0].value = settings.totalNumOfBalls;
+    $('#ballsAmountRange')[0].value = settings.totalNumOfBalls;
 }
 
 function checkBallsAmount(maxBallsNumber){

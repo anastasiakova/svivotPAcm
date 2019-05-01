@@ -9,7 +9,7 @@
          <small >Anastasia Kovalkov & Saar Guttman</small>  
 </header>
                      
-<body onload="toggleVisibility('Welcome')">		
+<body onload="toggleVisibility('Welcome'); loadSettings();" >		
         <div id="wrapper">
                 <script type="text/javascript" src="menu.js"></script>           
                 <nav>
@@ -45,6 +45,7 @@
                                 <input id="lblTime" type="text"/>
                                 <br/>
                                 <canvas id="canvas" height="600" width="600"></canvas>
+                                <li><a href="#" onclick="Start()">Play</a></li>
                                 <script type="text/javascript" src="pacman.js"></script>
                 </section>  -->
                 <div id="SignUp" class="txt">
@@ -149,9 +150,10 @@
                                         <label>
                                              Choose Balls Amount
                                         </label>
-                                         <input type="range" name="ballsRange" min="50" value = "70" max="90" id= "ballsRange"
+                                         <input id="ballsAmountRange" type="range" name="ballsRange" min="50" max="90" id= "ballsRange"
                                          oninput = "ballsRangeOutput.value = ballsRange.value" class="align-left field-split-large"/>
-                                         <input type="number" style="text-align: center" name="ballsRangeOutput" id="ballsRangeOutput" value = "70" min="50" max="90" oninput = "ballsRange.value = ballsRangeOutput.value"
+                                         <!-- <input type="number" style="text-align: center" name="ballsRangeOutput" id="ballsRangeOutput" value = "70" min="50" max="90" oninput = "ballsRange.value = ballsRangeOutput.value" -->
+                                         <input type="number" style="text-align: center" name="ballsRangeOutput" id="ballsRangeOutput" min="50" max="90" oninput = "ballsRange.value = ballsRangeOutput.value"
                                          class="field-style align-right field-split-small">
                                         </input>
                                         <br>
@@ -184,9 +186,9 @@
                                         <label for="timeLimitation">
                                              Choose time limit
                                         </label>
-                                         <input type="range" name="timeLimitation" min="60" value = "60" max="300" id= "timeLimitation"
+                                         <input id="timeLimitationRange" type="range" name="timeLimitation" min="60" max="300" id= "timeLimitation"
                                          oninput = "timeLimitationOutput.value = timeLimitation.value" class="align-left field-split-large"/>
-                                         <input type="number" style="text-align: center" name="timeLimitationOutput" id="timeLimitationOutput" value = "60" min="60" oninput = "timeLimitation.value = timeLimitationOutput.value"
+                                         <input type="number" style="text-align: center" name="timeLimitationOutput" id="timeLimitationOutput" min="60" oninput = "timeLimitation.value = timeLimitationOutput.value"
                                          class="field-style align-right field-split-small">
                                         </input>
                                         <br>
@@ -198,9 +200,9 @@
                                         <lable for="numOfMonsters">
                                                 Choose number of monsters
                                         </lable>
-                                        <form> 
+                                        <form id="numberOfMonstersRadio"> 
                                                 <br>
-                                                <input type="radio" name="numOfMonsters" value="1" checked>  1 - Easy
+                                                <input type="radio" name="numOfMonsters" value="1">  1 - Easy
                                                 <input type="radio" name="numOfMonsters" value="2"> 2 - Hard
                                                 <input type="radio" name="numOfMonsters" value="3"> 3 - Crazy
                                         </form>
