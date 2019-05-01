@@ -9,15 +9,15 @@
          <small >Anastasia Kovalkov & Saar Guttman</small>  
 </header>
                      
-<body onload="toggleVisibility('Welcome'); loadSettings();" >		
+<body onload="toggleVisibility('Welcome');" >		
         <div id="wrapper">
                 <script type="text/javascript" src="menu.js"></script>           
                 <nav>
-                         <li><a href="#" onclick="toggleVisibility('Welcome')">Welcome</a></li>
-                         <li><a href="#" onclick="toggleVisibility('SignUp')">Sign Up</a></li>
-                         <li><a href="#" onclick="toggleVisibility('LogIn')">Log In</a></li>
-                         <li><a href="#" onclick="toggleVisibility('Settings')">Settings</a></li>
-                         <li><a href="#" onclick="toggleVisibility('About')">About</a></li>
+                         <li><a id="welcomeLink" href="#" onclick="toggleVisibility('Welcome')">Welcome</a></li>
+                         <li><a id="settingsLink" href="#" onclick="toggleVisibility('Settings')">Settings</a></li>
+                         <li><a id="aboutLink" href="#" onclick="toggleVisibility('About')">About</a></li>
+                         <li><a id="signupLink" href="#" onclick="toggleVisibility('SignUp')">Sign Up</a></li>
+                         <li><a id="loginLink" href="#" onclick="toggleVisibility('LogIn')">Log In</a></li>
           
                 </nav>
                 <div id="Welcome" class="txt">
@@ -54,9 +54,9 @@
                         <form class="form-style-9">
                                  <ul>
                                          <li>
-                                         <input type="text" name="userName" class="field-style field-split align-left" 
+                                         <input type="text" name="signupUserName" class="field-style field-split align-left" 
                                          placeholder="User Name" />
-                                         <input type="password" name="password" class="field-style field-split align-right" 
+                                         <input type="password" name="signupPassword" class="field-style field-split align-right" 
                                          placeholder="Password" />
                                         </li>
 
@@ -75,29 +75,31 @@
                                          </li>
 
                                         <li>
-                                        <input type="submit" value="Sign Up" />
+                                        <input type="button" value="Sign Up" onclick="validateSignUpForm()" />
                                         </li>
                                  </ul>                                                              
                         </form>
+                        <script type="text/javascript" src="users.js"></script>
                 </section>
                 </div> 
                 <div id="LogIn" class="txt">
                 <!-- log in -->
                         <section style="margin-right:20%; color: azure;">
-                                <form class="form-style-9">
+                                <form class="form-style-9" action="#" >
                                         <ul>
                                         <li>
-                                        <input type="text" name="userName" class="field-style field-split align-left" 
+                                        <input type="text" name="loginUserName" class="field-style field-split align-left" 
                                         placeholder="User Name" />
-                                        <input type="password" name="password" class="field-style field-split align-right" 
+                                        <input type="password" name="loginPassword" class="field-style field-split align-right" 
                                         placeholder="Password" />
                                         </li>
 
                                         <li>
-                                        <input type="submit" value="Log In" />
+                                        <input type="button" value="Log In" onclick="tryLogIn()" />
                                         </li>
                                         </ul>                                                              
                                 </form>
+                                <script type="text/javascript" src="users.js"></script>
                         </section>
                 </div>
           <!-- config -->
@@ -150,10 +152,10 @@
                                         <label>
                                              Choose Balls Amount
                                         </label>
-                                         <input id="ballsAmountRange" type="range" name="ballsRange" min="50" max="90" id= "ballsRange"
+                                         <input id="ballsAmountRange" type="range" name="ballsRange" min="50" value="60" max="90" id= "ballsRange"
                                          oninput = "ballsRangeOutput.value = ballsRange.value" class="align-left field-split-large"/>
                                          <!-- <input type="number" style="text-align: center" name="ballsRangeOutput" id="ballsRangeOutput" value = "70" min="50" max="90" oninput = "ballsRange.value = ballsRangeOutput.value" -->
-                                         <input type="number" style="text-align: center" name="ballsRangeOutput" id="ballsRangeOutput" min="50" max="90" oninput = "ballsRange.value = ballsRangeOutput.value"
+                                         <input type="number" style="text-align: center" name="ballsRangeOutput" id="ballsRangeOutput" min="50" value="60" max="90" oninput = "ballsRange.value = ballsRangeOutput.value"
                                          class="field-style align-right field-split-small">
                                         </input>
                                         <br>
@@ -169,15 +171,15 @@
                                  <div class="grid">
                                          <div style="margin: 20px; height: 70px;">
                                                 25 Points
-                                                <input type="color" id="twentyFiveBallColor" name="head">
+                                                <input type="color" id="twentyFiveBallColor" value="#265cb5" name="head">
                                         </div>
                                         <div style="margin: 20px; height: 70px;">
                                                 15 Points    
-                                                <input type="color" id="fifteenBallColor" name="head">
+                                                <input type="color" id="fifteenBallColor" value="#21931d" name="head">
                                         </div>
                                         <div style="margin: 20px; height: 70px;">
                                                5 Points
-                                               <input type="color" id="fiveBallColor" name="head">
+                                               <input type="color" id="fiveBallColor" value="#d8150f" name="head">
                                         </div>
                                  </li>
 
@@ -186,9 +188,9 @@
                                         <label for="timeLimitation">
                                              Choose time limit
                                         </label>
-                                         <input id="timeLimitationRange" type="range" name="timeLimitation" min="60" max="300" id= "timeLimitation"
+                                         <input id="timeLimitationRange" type="range" name="timeLimitation" min="60" value="70" max="300" id= "timeLimitation"
                                          oninput = "timeLimitationOutput.value = timeLimitation.value" class="align-left field-split-large"/>
-                                         <input type="number" style="text-align: center" name="timeLimitationOutput" id="timeLimitationOutput" min="60" oninput = "timeLimitation.value = timeLimitationOutput.value"
+                                         <input type="number" style="text-align: center" name="timeLimitationOutput" id="timeLimitationOutput" min="60" value="70" max="300" oninput = "timeLimitation.value = timeLimitationOutput.value"
                                          class="field-style align-right field-split-small">
                                         </input>
                                         <br>
@@ -202,14 +204,14 @@
                                         </lable>
                                         <form id="numberOfMonstersRadio"> 
                                                 <br>
-                                                <input type="radio" name="numOfMonsters" value="1">  1 - Easy
+                                                <input type="radio" name="numOfMonsters" value="1" checked>  1 - Easy
                                                 <input type="radio" name="numOfMonsters" value="2"> 2 - Hard
                                                 <input type="radio" name="numOfMonsters" value="3"> 3 - Crazy
                                         </form>
                                 </li>
                                 <li>
                                    <input type="button" value = "Random Settings" onclick="randomSettings()" style="margin-left: 22%" />
-                                   <input type="submit" value = "Save" onclick="setSettings()"/>
+                                   <input type="button" value = "Save" onclick="setSettings()"/>
                                    <script type="text/javascript" src="pacman.js"></script>
                                 </li>
                                </ul>                                                              
