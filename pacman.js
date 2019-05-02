@@ -176,16 +176,16 @@ var interval;
 function createPacman(center, diraction){
     switch(diraction){
         case "UP":
-            drawPacman(center, 1.40 * Math.PI, 1.75 * Math.PI, center.x + 7, center.y, true);            
+            drawPacman(center, 1.40 * Math.PI, 1.75 * Math.PI, center.x , center.y + 7, true);            
             break;
         case "DOWN":
-            drawPacman(center, 2.3 * Math.PI, 0.6 * Math.PI, center.x + 7, center.y, true);            
+            drawPacman(center, 2.3 * Math.PI, 0.6 * Math.PI, center.x , center.y + 7, true);            
             break;
         case "RIGTH":
-            drawPacman(center, 0.15 * Math.PI, 1.85 * Math.PI, center.x, center.y - 7);
+            drawPacman(center, 0.15 * Math.PI, 1.85 * Math.PI, center.x + 7, center.y );
             break;
         case "LEFT":
-            drawPacman(center, 2.85 * Math.PI, 1.15 * Math.PI, center.x, center.y - 7, true);
+            drawPacman(center, 2.85 * Math.PI, 1.15 * Math.PI, center.x + 7, center.y , true);
             break;     
     }
 }
@@ -193,11 +193,11 @@ function createPacman(center, diraction){
 function drawPacman(center, startAngle, endAngle, eyeX, eyeY, counterClockwise = false ){
     context.beginPath();
     context.arc(center.x + 7, center.y + 7, 15, startAngle, endAngle, counterClockwise); // half circle
-    context.lineTo(center.x, center.y);
+    context.lineTo(center.x + 7, center.y + 7);
     context.fillStyle = pacColor; //color
     context.fill();
     context.beginPath();
-    context.arc(eyeX, eyeY, 2.5, 0.15 * Math.PI , 1.85 * Math.PI); // circle
+    context.arc(eyeX, eyeY, 3, 0.15 * Math.PI , 1.85 * Math.PI); // circle
     context.fillStyle = "black"; //color
     context.fill(); 
 }
@@ -365,7 +365,7 @@ function Draw() {
             center.x = i * 40 + 15;
             center.y = j * 40 + 15;
             if (board[i][j] === boardParams.pacman) {
-                createPacman(center, "UP");
+                createPacman(center, "RIGTH");
             } else if (board[i][j] === boardParams.monster) {
                 createMonsters(center);
             } else if (board[i][j] === boardParams.wall) {
