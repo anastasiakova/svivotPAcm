@@ -178,8 +178,6 @@ var ballsBoard = [
     [0,0,4,0,0,0,0,0,0,4,4,4,0,0,0],
     [0,0,4,0,0,0,0,0,0,0,0,0,0,0,0],
 ];
-var score;
-
 var score = 0;
 var lives = 3;
 var pacColor;
