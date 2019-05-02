@@ -165,6 +165,7 @@ var board = [
     [0,0,4,0,0,0,0,0,0,0,0,0,0,0,0],
 ];
 var score;
+var lives = 3;
 var pacColor;
 var start_time;
 var time_elapsed;
@@ -357,6 +358,7 @@ function Draw() {
     context.clearRect(0, 0, canvas.width, canvas.height); //clean board
     lblScore.value = score;
     lblTime.value = time_elapsed;
+    lblLives.value = lives;
     for (var i = 0; i < 15; i++) {
         for (var j = 0; j < 15; j++) {
             var center = new Object();
@@ -378,7 +380,8 @@ function Draw() {
 }
 
 function UpdatePosition() {
-    board[shape.i][shape.j] = 0;
+    var origI = shape.i;
+    var origJ = shape.j;
     var x = GetKeyPressed();
     if (x === 1) {
         if (shape.j > 0 && board[shape.i][shape.j - 1] !== 4) {
@@ -403,6 +406,25 @@ function UpdatePosition() {
     if (board[shape.i][shape.j] === 1) {
         score++;
     }
+    if(board[shape.i][shape.j] === boardParams.monster){
+        lives--;
+        score -= 10;
+        alert("You died!");
+    }
+
+    if(board[shape.i][shape.j] === boardParams.twentyFiveBall){
+        score += 25;
+    }
+    
+    if(board[shape.i][shape.j] === boardParams.fifteenBall){
+        score += 15;
+    }
+
+    if(board[shape.i][shape.j] === boardParams.fiveBall){
+        score += 5;
+    }
+
+    board[origI][origJ] = 0;
     board[shape.i][shape.j] = 2;
     var currentTime = new Date();
     time_elapsed = (currentTime - start_time) / 1000;
@@ -416,6 +438,7 @@ function UpdatePosition() {
         Draw();
     }
 }
+
 
 function GameSettings(){
     this.moveUp = 'ArrowUp';

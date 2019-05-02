@@ -280,23 +280,31 @@ footer{
    color: azure;
 }
 
-  .grid {
-    display: grid;
-    grid-gap: 3px;
-    grid-template-columns: 120px 120px 120px;
-    grid-template-rows: 100px;
-    margin-left: 10px;
-    
-  }
+.grid {
+  display: grid;
+  grid-gap: 3px;
+  grid-template-columns: 120px 120px 120px;
+  grid-template-rows: 100px;
+  margin-left: 10px;
   
-  [class^="item"] {
-    border: 3px solid #48ABFF;
-    border-radius: 20px;
-    margin: 5px 10px;
-    /* height: 15px;
-    width: 15px; */
-    background-color: #48ABFF;
-    border-radius: 50%;
-    display: inline-block;
-    margin: 10px; 
-  }
+}
+
+.stats{
+  color: azure;
+}
+
+#lblLives{
+  color: azure;
+}
+  
+[class^="item"] {
+  border: 3px solid #48ABFF;
+  border-radius: 20px;
+  margin: 5px 10px;
+  /* height: 15px;
+  width: 15px; */
+  background-color: #48ABFF;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 10px; 
+}
