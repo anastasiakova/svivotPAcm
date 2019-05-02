@@ -226,10 +226,10 @@ function drawBall(center, color){
 function createMonsters(center){
     context.beginPath();
     context.fillStyle = "rgb(32, 173, 255)" ;
-    context.arc(center.x + 7 , center.y + 7 , 7, Math.PI, 2 * Math.PI);
-    context.lineTo(center.x + 19.5, center.y + 19.5);
-    context.arc(center.x + 15 / 2, center.y + 12.5 , 7 * 0.5, 0, Math.PI);
-    context.arc(center.x + 15 / 2 - 12.5 , center.y + 12.5, 7 * 0.5, 0, Math.PI);
+    context.arc(center.x + 7.5 , center.y + 7.5, 12.5, Math.PI, 2* Math.PI);
+    context.lineTo(center.x + 7.5 + 12.5, center.y + 7.5 + 7.5);
+    context.arc(center.x + 7.5 + 12.5 / 2, center.y + 7.5 + 7.5, 12.5 * 0.5, 0, Math.PI);
+    context.arc(center.x + 7.5 + 12.5 / 2 -12.5 , center.y + 7.5 + 7.5, 12.5 * 0.5, 0, Math.PI);
     context.closePath();
     context.fill();
     context.strokeStyle = "azure";
