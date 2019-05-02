@@ -43,11 +43,11 @@ function validateSignUpForm(){
     var enteredDate = $("[name='birthday']").val();
 
     var validForm = (validateUsername(enteredUsername) &&
-                    validatePwd(enteredPwd)) &&
+                    validatePwd(enteredPwd) &&
                     ValidateName(enteredFirstName) &&
                     ValidateName(enteredLastName) &&
                     validateDate(enteredDate) &&
-                    validateEmail(enteredEmail);
+                    validateEmail(enteredEmail));
     
     if(validForm)
     {

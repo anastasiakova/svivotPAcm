@@ -18,24 +18,22 @@ var settings = {
     fiveBallAmount: Math.round(70*0.6),
 
     // time
-    timeLimitation : 80,
+    timeLimitation : 15,
 
     // monsters
     numberOfMonsters : 3
 };
+
+var playTimeTwentyFiveBallAmount = settings.twentyFiveBallAmount;
+var playTimeFifteenBallAmount = settings.fifteenBallAmount;
+var playTimeFiveBallAmount = settings.fiveBallAmount;
+var playTimeTimeLimitation = settings.timeLimitation;
 
 function setKeysValue(key, keyVal ,textVal){
     if(key.is(':checked')){
         return keyVal;
     }
     return textVal.val();
-}
-
-function loadSettings(){
-    $('#timeLimitationRange')[0].value = settings.timeLimitation;
-    $('#timeLimitationOutput')[0].value = settings.timeLimitation;
-    $('#ballsRangeOutput')[0].value = settings.totalNumOfBalls;
-    $('#ballsAmountRange')[0].value = settings.totalNumOfBalls;
 }
 
 function checkBallsAmount(maxBallsNumber){
@@ -181,13 +179,16 @@ var ballsBoard = [
     [0,0,4,0,0,0,0,0,0,0,0,0,0,0,0],
 ];
 var score;
+
+var score = 0;
 var lives = 3;
 var pacColor;
 var start_time;
-var time_elapsed;
+var time_remaining;
 var interval;
 var monstersPos;
 var pacmanPos;
+var lost = false;
 
 //Start();
 
@@ -295,9 +296,9 @@ function putMonsters(){
 }
 
 function createBoard(){
-    var fiveBalls = settings.fiveBallAmount;
-    var fifteenBalls = settings.fifteenBallAmount;
-    var twentyFiveBalls = settings.twentyFiveBallAmount;
+    var fiveBalls = playTimeFiveBallAmount;
+    var fifteenBalls = playTimeFifteenBallAmount;
+    var twentyFiveBalls = playTimeTwentyFiveBallAmount;
     putMonsters();
     putPacman();
 
@@ -343,10 +344,15 @@ function initiateRandomArray(){
     return arr;
 }
 
-function Start() {
-    score = 0;
+
+
+function Start(shouldGetNewTime = true) {
+
     pacColor = "white";
-    start_time = new Date();
+    if(shouldGetNewTime){
+        start_time = new Date();
+    }
+    
     createBoard();
     keysDown = {};
     addEventListener("keydown", function (e) {
@@ -379,7 +385,7 @@ function GetKeyPressed() {
 function Draw() {
     context.clearRect(0, 0, canvas.width, canvas.height); //clean board
     lblScore.value = score;
-    lblTime.value = time_elapsed;
+    lblTime.value = Math.round(settings.timeLimitation - time_remaining);
     lblLives.value = lives;
     for (var i = 0; i < 15; i++) {
         for (var j = 0; j < 15; j++) {
@@ -402,7 +408,9 @@ function Draw() {
 }
 
 function UpdatePosition() {
-     var origI = pacmanPos.row;
+     
+    if (!lost){
+        var origI = pacmanPos.row;
      var origJ = pacmanPos.col;
      moveMonsters();
     var x = GetKeyPressed();
@@ -432,19 +440,35 @@ function UpdatePosition() {
     if(board[pacmanPos.row][pacmanPos.col] === boardParams.monster){
         lives--;
         score -= 10;
-        alert("You died!");
+        if (lives > 0)
+        {
+            alert("Oh no..! You just got bitten by a ghost!\nOnly " + lives + " live(s) left.\nClick OK to continue playing.");
+            initializeBoard();
+            var shouldGetNewTime = false;
+            Start(shouldGetNewTime);
+
+        }
+        else
+        {
+            window.clearInterval(interval);
+            lost = true;
+            alert("you Lost!");
+        }
     }
 
     if(board[pacmanPos.row][pacmanPos.col] === boardParams.twentyFiveBall){
         score += 25;
+        playTimeTwentyFiveBallAmount--;
     }
     
     if(board[pacmanPos.row][pacmanPos.col] === boardParams.fifteenBall){
         score += 15;
+        playTimeFifteenBallAmount--;
     }
 
     if(board[pacmanPos.row][pacmanPos.col] === boardParams.fiveBall){
         score += 5;
+        playTimeFiveBallAmount--;
     }
 
     board[origI][origJ] = 0;
@@ -452,15 +476,56 @@ function UpdatePosition() {
     board[pacmanPos.row][pacmanPos.col] = 2;
 
     var currentTime = new Date();
-    time_elapsed = (currentTime - start_time) / 1000;
-    if (score >= 20 && time_elapsed <= 10) {
-        pacColor = "green";
+    time_remaining = (currentTime - start_time) / 1000;
+    if(settings.timeLimitation - time_remaining <= 10){
+        $("#lblTime")[0].style.color = 'red';
+        $("#lblTime")[0].style.border = '1px solid red';
     }
-    if (score === 50) {
+    if (time_remaining >= settings.timeLimitation) {
         window.clearInterval(interval);
-        window.alert("Game completed");
-    } else {
-        Draw();
+        lost = true;
+        if(score < 150){
+            alert("You can do better");
+        }
+        else
+        {
+            alert("We have a winner!!!");
+        }
+    }
+    
+        if(lost){
+            
+            if (confirm('Wanna have some more fun?')) {
+                lost = false;
+                initializeValues();
+                Start();
+            } else {
+                toggleVisibility('Welcome');
+            }
+        }else{
+            Draw();
+        }
+    }
+}
+
+function initializeValues(){
+    playTimeTwentyFiveBallAmount = settings.twentyFiveBallAmount;
+    playTimeFifteenBallAmount = settings.fifteenBallAmount;
+    playTimeFiveBallAmount = settings.fiveBallAmount;
+    playTimeTimeLimitation = settings.timeLimitation;
+    score = 0;
+    lives = 3;
+
+    initializeBoard();
+}
+
+function initializeBoard() {
+    for (let index = 0; index < board.length; index++) {
+        for (let j = 0; j < board[0].length; j++) {
+            if (board[index][j] != boardParams.wall) {
+                board[index][j] = boardParams.path;
+            }
+        }
     }
 }
 
@@ -511,4 +576,5 @@ function getAvailble(monster){
         availbe.push({row: monster.row, col: monster.col - 1});
    }
    return availbe;
+        
 }
