@@ -410,7 +410,7 @@ function Draw(diraction) {
 function UpdatePosition() {
      
     if (!lost){
-        var origI = pacmanPos.row;
+     var origI = pacmanPos.row;
      var origJ = pacmanPos.col;
      moveMonsters();
     var x = GetKeyPressed();
@@ -534,28 +534,30 @@ function initializeBoard() {
 }
 
 function moveMonsters(){
-    for (let i = 0; i < monstersPos.length; i++) {
-        var availbe = getAvailble(monstersPos[i]);
-        var rowDistance = monstersPos[i].row - pacmanPos.row;
-        var colDistance = monstersPos[i].col - pacmanPos.col;
-        var notChanged = true;
-        while(notChanged && availbe.length != 0){
-            var pos = availbe.pop();
-            var isBetter =  (rowDistance != 0  && Math.abs(rowDistance) > Math.abs(pos.row - pacmanPos.row)) ||
-             ( colDistance != 0 && Math.abs(colDistance) > Math.abs(pos.col - pacmanPos.col));
-            if(isBetter){               
+    if(Math.random() <= 0.7){
+        for (let i = 0; i < monstersPos.length; i++) {
+            var availbe = getAvailble(monstersPos[i]);
+            var rowDistance = monstersPos[i].row - pacmanPos.row;
+            var colDistance = monstersPos[i].col - pacmanPos.col;
+            var notChanged = true;
+            while(notChanged && availbe.length != 0){
+                var pos = availbe.pop();
+                var isBetter =  (rowDistance != 0  && Math.abs(rowDistance) > Math.abs(pos.row - pacmanPos.row)) ||
+                ( colDistance != 0 && Math.abs(colDistance) > Math.abs(pos.col - pacmanPos.col));
+                if(isBetter){               
+                    board[monstersPos[i].row][monstersPos[i].col] = ballsBoard[monstersPos[i].row][monstersPos[i].col];
+                    monstersPos[i] = pos;
+                    board[monstersPos[i].row][monstersPos[i].col] = boardParams.monster;
+                    notChanged = false;
+                }
+            }
+            if(notChanged && availbe.length == 0){
+                availbe = getAvailble(monstersPos[i]);
+                pos = availbe.pop();
                 board[monstersPos[i].row][monstersPos[i].col] = ballsBoard[monstersPos[i].row][monstersPos[i].col];
                 monstersPos[i] = pos;
-                board[monstersPos[i].row][monstersPos[i].col] = boardParams.monster;
-                notChanged = false;
+                board[monstersPos[i].row][monstersPos[i].col] = boardParams.monster; 
             }
-        }
-        if(notChanged && availbe.length == 0){
-            availbe = getAvailble(monstersPos[i]);
-            pos = availbe.pop();
-            board[monstersPos[i].row][monstersPos[i].col] = ballsBoard[monstersPos[i].row][monstersPos[i].col];
-            monstersPos[i] = pos;
-            board[monstersPos[i].row][monstersPos[i].col] = boardParams.monster; 
         }
     }
 }
