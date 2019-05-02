@@ -2,10 +2,10 @@
 var settings = {
     // keys
 
-    upKey: 38,
-    downKey: 40,
-    leftKey: 37,
-    rightKey: 39,
+    upKey: 'ArrowUp',
+    downKey: 'ArrowDown',
+    leftKey: 'ArrowLeft',
+    rightKey: 'ArrowRight',
 
     // balls
     twentyFiveBallColor: "Green",
@@ -189,23 +189,25 @@ var interval;
 var monstersPos;
 var pacmanPos;
 var lost = false;
-
-//Start();
+var pacmanLastDiraction = 4;
 
 function createPacman(center, diraction){
+    if(diraction == undefined){
+        diraction = pacmanLastDiraction;
+    }
     switch(diraction){
-        case "UP":
+        case 1:
             drawPacman(center, 1.40 * Math.PI, 1.75 * Math.PI, center.x , center.y + 7, true);            
             break;
-        case "DOWN":
+        case 2:
             drawPacman(center, 2.3 * Math.PI, 0.6 * Math.PI, center.x , center.y + 7, true);            
             break;
-        case "RIGTH":
+        case 4:
             drawPacman(center, 0.15 * Math.PI, 1.85 * Math.PI, center.x + 7, center.y );
             break;
-        case "LEFT":
+        case 3:
             drawPacman(center, 2.85 * Math.PI, 1.15 * Math.PI, center.x + 7, center.y , true);
-            break;     
+            break;  
     }
 }
 
@@ -368,21 +370,21 @@ function Start(shouldGetNewTime = true) {
  * @return {number}
  */
 function GetKeyPressed() {
-    if (keysDown['ArrowUp']) {
+    if (keysDown[settings.upKey]) {
         return 1;
     }
-    if (keysDown['ArrowDown']) {
+    if (keysDown[settings.downKey]) {
         return 2;
     }
-    if (keysDown['ArrowLeft']) {
+    if (keysDown[settings.leftKey]) {
         return 3;
     }
-    if (keysDown['ArrowRight']) {
+    if (keysDown[settings.rightKey]) {
         return 4;
     }
 }
 
-function Draw() {
+function Draw(diraction) {
     context.clearRect(0, 0, canvas.width, canvas.height); //clean board
     lblScore.value = score;
     lblTime.value = Math.round(settings.timeLimitation - time_remaining);
@@ -393,7 +395,7 @@ function Draw() {
             center.x = i * 40 + 15;
             center.y = j * 40 + 15;
             if (board[i][j] === boardParams.pacman) {
-                createPacman(center, "RIGTH");
+                createPacman(center, diraction);
             } else if (board[i][j] === boardParams.monster) {
                 createMonsters(center);
             } else if (board[i][j] === boardParams.wall) {
@@ -415,21 +417,25 @@ function UpdatePosition() {
      moveMonsters();
     var x = GetKeyPressed();
     if (x === 1) {
+        pacmanLastDiraction = 1;
         if (pacmanPos.col > 0 && board[pacmanPos.row][pacmanPos.col - 1] !== 4) {
             pacmanPos.col--;
         }
     }
     if (x === 2) {
+        pacmanLastDiraction = 2;
         if (pacmanPos.col < 14 && board[pacmanPos.row][pacmanPos.col + 1] !== 4) {
             pacmanPos.col++;
         }
     }
     if (x === 3) {
+        pacmanLastDiraction = 3;
         if (pacmanPos.row > 0 && board[pacmanPos.row - 1][pacmanPos.col] !== 4) {
             pacmanPos.row--;
         }
     }
     if (x === 4) {
+        pacmanLastDiraction = 4;
         if (pacmanPos.row < 14 && board[pacmanPos.row + 1][pacmanPos.col] !== 4) {
             pacmanPos.row++;
         }
@@ -554,7 +560,6 @@ function moveMonsters(){
             board[monstersPos[i].row][monstersPos[i].col] = boardParams.monster; 
         }
     }
-  
 }
 
 function getAvailble(monster){
