@@ -542,7 +542,7 @@ function initializeBoard() {
 }
 
 function moveMonsters(){
-    if(Math.random() <= 0.7){
+    if(Math.random() <= 0.5){
         for (let i = 0; i < monstersPos.length; i++) {
             var availbe = getAvailble(monstersPos[i]);
             var rowDistance = monstersPos[i].row - pacmanPos.row;
@@ -554,9 +554,11 @@ function moveMonsters(){
                 ( colDistance != 0 && Math.abs(colDistance) > Math.abs(pos.col - pacmanPos.col));
                 if(isBetter){               
                     board[monstersPos[i].row][monstersPos[i].col] = ballsBoard[monstersPos[i].row][monstersPos[i].col];
-                    monstersPos[i] = pos;
-                    board[monstersPos[i].row][monstersPos[i].col] = boardParams.monster;
-                    notChanged = false;
+                    if(board[pos.row][pos.col] != boardParams.monster){
+                        monstersPos[i] = pos;
+                        board[monstersPos[i].row][monstersPos[i].col] = boardParams.monster;
+                        notChanged = false;
+                    }
                 }
             }
             if(notChanged && availbe.length == 0){
