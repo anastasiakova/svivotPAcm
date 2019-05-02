@@ -481,6 +481,13 @@ function moveMonsters(){
                 notChanged = false;
             }
         }
+        if(notChanged && availbe.length == 0){
+            availbe = getAvailble(monstersPos[i]);
+            pos = availbe.pop();
+            board[monstersPos[i].row][monstersPos[i].col] = ballsBoard[monstersPos[i].row][monstersPos[i].col];
+            monstersPos[i] = pos;
+            board[monstersPos[i].row][monstersPos[i].col] = boardParams.monster; 
+        }
     }
   
 }
