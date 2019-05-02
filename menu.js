@@ -26,4 +26,11 @@ function toggleVisibility(selectedTab) {
             content[i].style.display = 'none';
         }
     }
+
+    if(selectedTab != 'Play'){
+        $('#Play')[0].style.display = 'none';
+    }
+    else{
+        $('#Play')[0].style.display = 'block';
+    }
 }

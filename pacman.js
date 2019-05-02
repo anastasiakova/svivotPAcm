@@ -64,26 +64,27 @@ function setSettings(){
     const ballsRange = $("#ballsRange").val();
     this.settings = {
         //keys 
-        upKey: setKeysValue($("#defaultUp"), "up", $("#keysup")),
-        downKey: setKeysValue($("#defaultDown"), "down", $("#keysdown")),
-        leftKey: setKeysValue($("#defaultLeft"), "left", $("#keysleft")),
-        rightKey: setKeysValue($("#defaultRight"), "right", $("#keysright")),
+        upKey: setKeysValue($("#defaultUp"), "ArrowUp", $("#keysup")),
+        downKey: setKeysValue($("#defaultDown"), "ArrowDown", $("#keysdown")),
+        leftKey: setKeysValue($("#defaultLeft"), "ArrowLeft", $("#keysleft")),
+        rightKey: setKeysValue($("#defaultRight"), "ArrowRight", $("#keysright")),
         
         // balls
         twentyFiveBallColor: $("#twentyFiveBallColor").val(),
         fifteenBallColor: $("#fifteenBallColor").val(), 
-        fiveBallColor: $("#fiveBallColor")[0].val(),
+        fiveBallColor: $("#fiveBallColor").val(),
     
         twentyFiveBallAmount: Math.round(ballsRange * 0.1),
         fifteenBallAmount: Math.round(ballsRange * 0.3),
         fiveBallAmount: Math.round(ballsRange * 0.6),
 
          // time
-        timeLimitation: parseInt($("#timeLimitation")[0].value, 10),
+        timeLimitation: parseInt($("#timeLimitationRange").val()),
 
           // monsters
-         numberOfMonsters: $("input[name='numOfMonsters']:checked").val()
+         numberOfMonsters: parseInt($("input[name='numOfMonsters']:checked").val())
     }
+    var nu = $("input[name='numOfMonsters']:checked").val();
     checkBallsAmount(ballsRange);
 }
 function deafaultKeys(){
@@ -188,6 +189,10 @@ var monstersPos;
 var pacmanPos;
 var lost = false;
 var pacmanLastDiraction = 4;
+var originalStyle;
+var styleChanged = false;
+
+//Start();
 
 function createPacman(center, diraction){
     if(diraction == undefined){
@@ -347,7 +352,6 @@ function initiateRandomArray(){
 
 
 function Start(shouldGetNewTime = true) {
-
     pacColor = "white";
     if(shouldGetNewTime){
         start_time = new Date();
@@ -356,10 +360,10 @@ function Start(shouldGetNewTime = true) {
     createBoard();
     keysDown = {};
     addEventListener("keydown", function (e) {
-        keysDown[e.code] = true;
+        keysDown[e.key] = true;
     }, false);
     addEventListener("keyup", function (e) {
-        keysDown[e.code] = false;
+        keysDown[e.key] = false;
     }, false);
     interval = setInterval(UpdatePosition, 250);
 }
@@ -481,7 +485,9 @@ function UpdatePosition() {
 
     var currentTime = new Date();
     time_remaining = (currentTime - start_time) / 1000;
-    if(settings.timeLimitation - time_remaining <= 10){
+    if(settings.timeLimitation - time_remaining <= 10 && !styleChanged){
+        styleChanged = true;
+        originalStyle = $("#lblTime")[0].style;
         $("#lblTime")[0].style.color = 'red';
         $("#lblTime")[0].style.border = '1px solid red';
     }
@@ -519,7 +525,9 @@ function initializeValues(){
     playTimeTimeLimitation = settings.timeLimitation;
     score = 0;
     lives = 3;
-
+    if(styleChanged){
+        $("#lblTime")[0].style = originalStyle;
+    }
     initializeBoard();
 }
 

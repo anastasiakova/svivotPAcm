@@ -24,7 +24,6 @@
                 <!-- welcome -->
                 <section style="margin-left:40%; ">
                                 <img src="logo.png" width="200" />
-                                <!-- <div class="button up" onClick="toggleVisibility('LogIn')"> -->
                                 <div class="button" onclick="toggleVisibility('LogIn')">
                                         <p>Log In</p>
                                 </div> 
@@ -39,7 +38,8 @@
                 </section> 
                 </div>
                 <!-- pacman -->
-                <section style="margin-left:40%; color: white;">
+                <div id="Play">
+                        <section style="margin-left:40%; color: white;">
                                 Lives:
                                 <input class="stats" id="lblLives" type="text"/>
                                 Score:
@@ -48,9 +48,10 @@
                                 <input class="stats" id="lblTime" type="text"/>
                                 <br>
                                 <canvas id="canvas" height="600" width="600"></canvas>
-                                <li><a href="#" onclick="Start()">Play</a></li>
                                 <script type="text/javascript" src="pacman.js"></script>
-                </section> 
+                        </section> 
+                </div>
+                
                 <div id="SignUp" class="txt">
                 <!-- sign up -->
                 <section style="margin-right:20%; color: azure;">
@@ -214,7 +215,7 @@
                                 </li>
                                 <li>
                                    <input type="button" value = "Random Settings" onclick="randomSettings()" style="margin-left: 22%" />
-                                   <input type="button" value = "Save" onclick="setSettings()"/>
+                                   <input type="button" value = "Play!" onclick="setSettings(); toggleVisibility('Play'); Start();"/>
                                    <script type="text/javascript" src="pacman.js"></script>
                                 </li>
                                </ul>                                                              
@@ -222,7 +223,7 @@
                </section>
                </div>
         </div>
-        <div class="footer" style="position: fixed; left: 0; bottom: 0; width: 100%; color: azure; text-align: center;">
+        <div class="footer" style="position: fixed; align-content: center; bottom: 0; width: 100%; color: azure; text-align: center; background: rgba(25, 25, 25, .5)">
                 <p>Kovalkov@post.bgu.ac.il, Saarzeev@post.bgu.ac.il</p>
         </div>
 
