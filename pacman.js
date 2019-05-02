@@ -143,7 +143,8 @@ var boardParams = {
     "fiveBall": 5,
     "fifteenBall": 15,
     "twentyFiveBall": 25,
-    "path": 0
+    "path": 0,
+    "smiley": 50
 };
 var board = [
     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -187,6 +188,7 @@ var time_remaining;
 var interval;
 var monstersPos;
 var pacmanPos;
+var smileyPos;
 var lost = false;
 var pacmanLastDiraction = 4;
 var originalStyle;
@@ -268,16 +270,41 @@ function createWall(center){
     context.fill();                      
 }
 
+function createSmiley(center){
+    context.beginPath();
+    context.arc(center.x + 7.5, center.y + 7.5, 12.5, 0, Math.PI * 2, true); // Outer circle
+    context.moveTo(center.x + 16 , center.y + 7.5);
+    context.arc(center.x + 7.5 , center.y + 7.5, 8, 0, Math.PI, false); // Mouth (clockwise)
+    context.moveTo(center.x + 7.5 - 2.5, center.y + 7.5 - 5);
+    context.arc(center.x + 7.5 - 2.5, center.y + 7.5 - 5, 2.5, 0, Math.PI * 2, true); // Left eye
+    context.moveTo(center.x + 7.5 + 2.5, center.y + 7.5 - 5);
+    context.arc(center.x + 7.5 + 2.5, center.y + 7.5 - 5, 2.5, 0, Math.PI * 2, true); // Right eye
+    context.strokeStyle = "black";
+    context.fillStyle = "#00DEFF";
+    context.fill();
+    context.stroke();
+}
+
+function putSmiley(){
+    var pos = getRandomPos();
+    board[pos.row][pos.col] = boardParams.smiley;
+    smileyPos = pos;
+}
+
 function putPacman(){
+    var pos = getRandomPos();
+    board[pos.row][pos.col] = boardParams.pacman;
+    pacmanPos = pos;
+}
+
+function getRandomPos(){
     var randomRow = Math.round(Math.random() * 14);
     var randomCol = Math.round(Math.random() * 14);
     while (board[randomRow][randomCol] != boardParams.path){
         randomRow = Math.round(Math.random() * 14);
         randomCol = Math.round(Math.random() * 14);
     };
-    
-    board[randomRow][randomCol] = boardParams.pacman;
-    pacmanPos = {row: randomRow, col: randomCol};
+    return {row: randomRow, col: randomCol};
 }
 
 function putMonsters(){
@@ -305,8 +332,8 @@ function createBoard(){
     var fifteenBalls = playTimeFifteenBallAmount;
     var twentyFiveBalls = playTimeTwentyFiveBallAmount;
     putMonsters();
+    putSmiley();
     putPacman();
-
     for (var i = 0; i < 15*15; i++) {
         var randomIs = initiateRandomArray();
         var randomJs = initiateRandomArray();
@@ -349,14 +376,11 @@ function initiateRandomArray(){
     return arr;
 }
 
-
-
 function Start(shouldGetNewTime = true) {
     pacColor = "white";
     if(shouldGetNewTime){
         start_time = new Date();
     }
-    
     createBoard();
     keysDown = {};
     addEventListener("keydown", function (e) {
@@ -403,8 +427,11 @@ function Draw(diraction) {
             } else if (board[i][j] === boardParams.wall) {
                 createWall(center);
             }
-            else if(boardParams.path){  }
-            else{
+            else if(board[i][j] === boardParams.smiley){
+               createSmiley(center);
+            }
+            else if(board[i][j] === boardParams.path){  }
+            else {
                 createBalls(center, board[i][j]);
             }
         }
@@ -412,77 +439,75 @@ function Draw(diraction) {
 }
 
 function UpdatePosition() {
-     
     if (!lost){
-     var origI = pacmanPos.row;
-     var origJ = pacmanPos.col;
-     moveMonsters();
-    var x = GetKeyPressed();
-    if (x === 1) {
-        pacmanLastDiraction = 1;
-        if (pacmanPos.col > 0 && board[pacmanPos.row][pacmanPos.col - 1] !== 4) {
-            pacmanPos.col--;
+        var origI = pacmanPos.row;
+        var origJ = pacmanPos.col;
+        moveMonsters();
+        var x = GetKeyPressed();
+        if (x === 1) {
+            pacmanLastDiraction = 1;
+            if (pacmanPos.col > 0 && board[pacmanPos.row][pacmanPos.col - 1] !== 4) {
+                pacmanPos.col--;
+            }
         }
-    }
-    if (x === 2) {
-        pacmanLastDiraction = 2;
-        if (pacmanPos.col < 14 && board[pacmanPos.row][pacmanPos.col + 1] !== 4) {
-            pacmanPos.col++;
+        if (x === 2) {
+            pacmanLastDiraction = 2;
+            if (pacmanPos.col < 14 && board[pacmanPos.row][pacmanPos.col + 1] !== 4) {
+                pacmanPos.col++;
+            }
         }
-    }
-    if (x === 3) {
-        pacmanLastDiraction = 3;
-        if (pacmanPos.row > 0 && board[pacmanPos.row - 1][pacmanPos.col] !== 4) {
-            pacmanPos.row--;
+        if (x === 3) {
+            pacmanLastDiraction = 3;
+            if (pacmanPos.row > 0 && board[pacmanPos.row - 1][pacmanPos.col] !== 4) {
+                pacmanPos.row--;
+            }
         }
-    }
-    if (x === 4) {
-        pacmanLastDiraction = 4;
-        if (pacmanPos.row < 14 && board[pacmanPos.row + 1][pacmanPos.col] !== 4) {
-            pacmanPos.row++;
+        if (x === 4) {
+            pacmanLastDiraction = 4;
+            if (pacmanPos.row < 14 && board[pacmanPos.row + 1][pacmanPos.col] !== 4) {
+                pacmanPos.row++;
+            }
         }
-    }
-    if (board[pacmanPos.row][pacmanPos.col] === 1) {
-        score++;
-    }
-    if(board[pacmanPos.row][pacmanPos.col] === boardParams.monster){
-        lives--;
-        score -= 10;
-        if (lives > 0)
-        {
-            alert("Oh no..! You just got bitten by a ghost!\nOnly " + lives + " live(s) left.\nClick OK to continue playing.");
-            initializeBoard();
-            var shouldGetNewTime = false;
-            Start(shouldGetNewTime);
+        if (board[pacmanPos.row][pacmanPos.col] === 1) {
+            score++;
+        }
+        if(board[pacmanPos.row][pacmanPos.col] === boardParams.monster){
+            lives--;
+            score -= 10;
+            if (lives > 0)
+            {
+                alert("Oh no..! You just got bitten by a ghost!\nOnly " + lives + " live(s) left.\nClick OK to continue playing.");
+                initializeBoard();
+                var shouldGetNewTime = false;
+                Start(shouldGetNewTime);
 
+            }
+            else
+            {
+                window.clearInterval(interval);
+                lost = true;
+                alert("you Lost!");
+            }
         }
-        else
-        {
-            window.clearInterval(interval);
-            lost = true;
-            alert("you Lost!");
+
+        if(board[pacmanPos.row][pacmanPos.col] === boardParams.twentyFiveBall){
+            score += 25;
+            playTimeTwentyFiveBallAmount--;
         }
-    }
+        
+        if(board[pacmanPos.row][pacmanPos.col] === boardParams.fifteenBall){
+            score += 15;
+            playTimeFifteenBallAmount--;
+        }
 
-    if(board[pacmanPos.row][pacmanPos.col] === boardParams.twentyFiveBall){
-        score += 25;
-        playTimeTwentyFiveBallAmount--;
-    }
-    
-    if(board[pacmanPos.row][pacmanPos.col] === boardParams.fifteenBall){
-        score += 15;
-        playTimeFifteenBallAmount--;
-    }
+        if(board[pacmanPos.row][pacmanPos.col] === boardParams.fiveBall){
+            score += 5;
+            playTimeFiveBallAmount--;
+        }
 
-    if(board[pacmanPos.row][pacmanPos.col] === boardParams.fiveBall){
-        score += 5;
-        playTimeFiveBallAmount--;
-    }
-
-    board[origI][origJ] = 0;
-    ballsBoard[origI][origJ] = 0;
-    board[pacmanPos.row][pacmanPos.col] = 2;
-
+        board[origI][origJ] = 0;
+        ballsBoard[origI][origJ] = 0;
+        board[pacmanPos.row][pacmanPos.col] = 2;
     var currentTime = new Date();
     time_remaining = (currentTime - start_time) / 1000;
     if(settings.timeLimitation - time_remaining <= 10 && !styleChanged){
@@ -497,14 +522,20 @@ function UpdatePosition() {
         if(score < 150){
             alert("You can do better");
         }
-        else
-        {
-            alert("We have a winner!!!");
+        if (time_remaining >= settings.timeLimitation) {
+            window.clearInterval(interval);
+            lost = true;
+            if(score < 150){
+                alert("You can do better");
+            }
+            else
+            {
+                alert("We have a winner!!!");
+            }
         }
-    }
-    
+        
         if(lost){
-            
+                
             if (confirm('Wanna have some more fun?')) {
                 lost = false;
                 initializeValues();
@@ -514,7 +545,7 @@ function UpdatePosition() {
             }
         }else{
             Draw();
-        }
+        }   
     }
 }
 
@@ -573,23 +604,24 @@ function moveMonsters(){
 }
 
 function getAvailble(monster){
-   var availbe = [];
-   //down
-   if(monster.row + 1 < 15 && board[monster.row + 1][monster.col] != boardParams.wall){
-         availbe.push({row: monster.row + 1, col: monster.col});
-   }
-   //up
-   if(monster.row - 1 >= 0 && board[monster.row - 1][monster.col] != boardParams.wall){
-        availbe.push({row: monster.row - 1, col: monster.col});
-   }
-   //rigth
-   if(monster.col + 1 < 15 && board[monster.row][monster.col + 1] != boardParams.wall){
-        availbe.push({row: monster.row, col: monster.col + 1});
-   }
-   //low
-   if(monster.col - 1 >= 0 && board[monster.row][monster.col - 1] != boardParams.wall){
-        availbe.push({row: monster.row, col: monster.col - 1});
-   }
-   return availbe;
-        
+    var availbe = [];
+    //down
+    if(monster.row + 1 < 15 && board[monster.row + 1][monster.col] != boardParams.wall){
+            availbe.push({row: monster.row + 1, col: monster.col});
+    }
+    //up
+    if(monster.row - 1 >= 0 && board[monster.row - 1][monster.col] != boardParams.wall){
+            availbe.push({row: monster.row - 1, col: monster.col});
+    }
+    //rigth
+    if(monster.col + 1 < 15 && board[monster.row][monster.col + 1] != boardParams.wall){
+            availbe.push({row: monster.row, col: monster.col + 1});
+    }
+    //low
+    if(monster.col - 1 >= 0 && board[monster.row][monster.col - 1] != boardParams.wall){
+            availbe.push({row: monster.row, col: monster.col - 1});
+    }
+    return availbe;
+}    
 }
+
