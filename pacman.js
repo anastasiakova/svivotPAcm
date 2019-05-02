@@ -146,7 +146,7 @@ var boardParams = {
     "twentyFiveBall": 25,
     "path": 0
 };
-var shape = new Object();
+//var shape = new Object();
 var board = [
     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
     [0,0,4,4,4,4,0,0,0,4,4,4,4,0,0],
@@ -170,7 +170,8 @@ var pacColor;
 var start_time;
 var time_elapsed;
 var interval;
-
+var monstersPos;
+var pacmanPos;
 //Start();
 
 function createPacman(center, diraction){
@@ -253,23 +254,27 @@ function putPacman(){
     };
     
     board[randomRow][randomCol] = boardParams.pacman;
-    shape.i = randomRow;
-    shape.j = randomCol;
+    // pacmanPos.row = randomRow;
+    // pacmanPos.col = randomCol;
+    pacmanPos = {row: randomRow, col: randomCol};
 }
 
 function putMonsters(){
     switch(settings.numberOfMonsters){
         case 1:
            board[0][0] = boardParams.monster;
+           monstersPos = [{row: 0, col:0}];
            break;
         case 2:
            board[0][0] = boardParams.monster;
            board[14][14] = boardParams.monster;
+           monstersPos = [{row: 0, col:0},{row: 14, col :14}];
            break;
         case 3:
           board[0][0] = boardParams.monster ; 
           board[0][14] = boardParams.monster; 
           board[14][14] = boardParams.monster; 
+          monstersPos = [{row: 0, col:0},{row: 14, col :14},{row: 0, col: 14}];
           break;
     }
 }
@@ -380,52 +385,53 @@ function Draw() {
 }
 
 function UpdatePosition() {
-    var origI = shape.i;
-    var origJ = shape.j;
+     var origI = pacmanPos.row;
+     var origJ = pacmanPos.col;
     var x = GetKeyPressed();
     if (x === 1) {
-        if (shape.j > 0 && board[shape.i][shape.j - 1] !== 4) {
-            shape.j--;
+        if (pacmanPos.col > 0 && board[pacmanPos.row][pacmanPos.col - 1] !== 4) {
+            pacmanPos.col--;
         }
     }
     if (x === 2) {
-        if (shape.j < 14 && board[shape.i][shape.j + 1] !== 4) {
-            shape.j++;
+        if (pacmanPos.col < 14 && board[pacmanPos.row][pacmanPos.col + 1] !== 4) {
+            pacmanPos.col++;
         }
     }
     if (x === 3) {
-        if (shape.i > 0 && board[shape.i - 1][shape.j] !== 4) {
-            shape.i--;
+        if (pacmanPos.row > 0 && board[pacmanPos.row - 1][pacmanPos.col] !== 4) {
+            pacmanPos.row--;
         }
     }
     if (x === 4) {
-        if (shape.i < 14 && board[shape.i + 1][shape.j] !== 4) {
-            shape.i++;
+        if (pacmanPos.row < 14 && board[pacmanPos.row + 1][pacmanPos.col] !== 4) {
+            pacmanPos.row++;
         }
     }
-    if (board[shape.i][shape.j] === 1) {
+    if (board[pacmanPos.row][pacmanPos.col] === 1) {
         score++;
     }
-    if(board[shape.i][shape.j] === boardParams.monster){
+    if(board[pacmanPos.row][pacmanPos.col] === boardParams.monster){
         lives--;
         score -= 10;
         alert("You died!");
     }
 
-    if(board[shape.i][shape.j] === boardParams.twentyFiveBall){
+    if(board[pacmanPos.row][pacmanPos.col] === boardParams.twentyFiveBall){
         score += 25;
     }
     
-    if(board[shape.i][shape.j] === boardParams.fifteenBall){
+    if(board[pacmanPos.row][pacmanPos.col] === boardParams.fifteenBall){
         score += 15;
     }
 
-    if(board[shape.i][shape.j] === boardParams.fiveBall){
+    if(board[pacmanPos.row][pacmanPos.col] === boardParams.fiveBall){
         score += 5;
     }
 
     board[origI][origJ] = 0;
-    board[shape.i][shape.j] = 2;
+    board[pacmanPos.row][pacmanPos.col] = 2;
+
     var currentTime = new Date();
     time_elapsed = (currentTime - start_time) / 1000;
     if (score >= 20 && time_elapsed <= 10) {
@@ -439,6 +445,30 @@ function UpdatePosition() {
     }
 }
 
+function moveMonsters(){
+    monstersPos.forEach(monster => {
+        const rowDistance = monsterPos.row - pacmanPos.row;
+        const colDistance = monsterPos.col - pacmanPos.col;
+        //move up down
+        if(Math.abs(rowDistance) >= Math.abs(colDistance)){
+
+        }
+        //move rigth left
+        else {
+
+        }
+    });
+}
+
+function getBestRowMove(distance){
+    if(distance < 0){
+        return 1;
+    }
+    if(distance > 0){
+        return -1;
+    }
+    return 0;
+}
 
 function GameSettings(){
     this.moveUp = 'ArrowUp';
