@@ -146,8 +146,24 @@ var boardParams = {
     "twentyFiveBall": 25,
     "path": 0
 };
-//var shape = new Object();
 var board = [
+    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,4,4,4,4,0,0,0,4,4,4,4,0,0],
+    [0,0,0,0,0,4,0,0,0,4,0,0,0,0,0],
+    [0,0,0,4,4,0,0,0,0,4,4,4,0,0,0],
+    [0,0,0,0,0,0,0,4,4,4,0,0,0,0,0],
+    [0,0,4,0,4,0,0,0,0,4,0,0,4,4,0],
+    [0,0,4,0,0,0,0,0,0,4,0,0,0,4,0],
+    [0,0,4,0,0,0,4,4,0,0,0,0,0,4,0],
+    [0,4,4,0,0,4,4,0,0,0,0,0,0,4,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0,0,4,0],
+    [0,0,0,0,0,0,4,4,4,0,0,4,4,4,0],
+    [0,0,0,4,4,4,4,0,0,4,0,0,0,0,0],
+    [0,0,4,4,0,0,4,4,0,4,0,4,4,0,0],
+    [0,0,4,0,0,0,0,0,0,4,4,4,0,0,0],
+    [0,0,4,0,0,0,0,0,0,0,0,0,0,0,0],
+];
+var ballsBoard = [
     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
     [0,0,4,4,4,4,0,0,0,4,4,4,4,0,0],
     [0,0,0,0,0,4,0,0,0,4,0,0,0,0,0],
@@ -172,6 +188,7 @@ var time_elapsed;
 var interval;
 var monstersPos;
 var pacmanPos;
+
 //Start();
 
 function createPacman(center, diraction){
@@ -254,8 +271,6 @@ function putPacman(){
     };
     
     board[randomRow][randomCol] = boardParams.pacman;
-    // pacmanPos.row = randomRow;
-    // pacmanPos.col = randomCol;
     pacmanPos = {row: randomRow, col: randomCol};
 }
 
@@ -293,14 +308,17 @@ function createBoard(){
             var randomNum = Math.random();
             if( randomNum < 0.33 && fiveBalls > 0 ){
                 board[randomIs[i]][randomJs[i]] = boardParams.fiveBall;
+                ballsBoard[randomIs[i]][randomJs[i]] = boardParams.fiveBall;
                 fiveBalls --; 
             }
             else if( randomNum >= 0.33 && randomNum < 0.66 && fifteenBalls > 0 ){
                 board[randomIs[i]][randomJs[i]] = boardParams.fifteenBall;
+                ballsBoard[randomIs[i]][randomJs[i]] = boardParams.fifteenBall;
                 fifteenBalls --; 
             }
             else if( twentyFiveBalls > 0 ) {
                 board[randomIs[i]][randomJs[i]] = boardParams.twentyFiveBall;
+                ballsBoard[randomIs[i]][randomJs[i]] = boardParams.twentyFiveBall;
                 twentyFiveBalls --; 
             }
         }
@@ -326,7 +344,6 @@ function initiateRandomArray(){
 }
 
 function Start() {
-   // board = new Array();
     score = 0;
     pacColor = "white";
     start_time = new Date();
@@ -431,6 +448,7 @@ function UpdatePosition() {
     }
 
     board[origI][origJ] = 0;
+    ballsBoard[origI][origJ] = 0;
     board[pacmanPos.row][pacmanPos.col] = 2;
 
     var currentTime = new Date();
@@ -456,8 +474,8 @@ function moveMonsters(){
             var pos = availbe.pop();
             var isBetter =  (rowDistance != 0  && Math.abs(rowDistance) > Math.abs(pos.row - pacmanPos.row)) ||
              ( colDistance != 0 && Math.abs(colDistance) > Math.abs(pos.col - pacmanPos.col));
-            if(isBetter){
-                board[monstersPos[i].row][monstersPos[i].col] = boardParams.path;
+            if(isBetter){               
+                board[monstersPos[i].row][monstersPos[i].col] = ballsBoard[monstersPos[i].row][monstersPos[i].col];
                 monstersPos[i] = pos;
                 board[monstersPos[i].row][monstersPos[i].col] = boardParams.monster;
                 notChanged = false;
