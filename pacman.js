@@ -387,6 +387,7 @@ function Draw() {
 function UpdatePosition() {
      var origI = pacmanPos.row;
      var origJ = pacmanPos.col;
+     moveMonsters();
     var x = GetKeyPressed();
     if (x === 1) {
         if (pacmanPos.col > 0 && board[pacmanPos.row][pacmanPos.col - 1] !== 4) {
@@ -446,63 +447,43 @@ function UpdatePosition() {
 }
 
 function moveMonsters(){
-    monstersPos.forEach(monster => {
-        const rowDistance = monsterPos.row - pacmanPos.row;
-        const colDistance = monsterPos.col - pacmanPos.col;
-        //move up down
-        if(Math.abs(rowDistance) >= Math.abs(colDistance)){
-
+    for (let i = 0; i < monstersPos.length; i++) {
+        var availbe = getAvailble(monstersPos[i]);
+        var rowDistance = monstersPos[i].row - pacmanPos.row;
+        var colDistance = monstersPos[i].col - pacmanPos.col;
+        var notChanged = true;
+        while(notChanged && availbe.length != 0){
+            var pos = availbe.pop();
+            var isBetter =  (rowDistance != 0  && Math.abs(rowDistance) > Math.abs(pos.row - pacmanPos.row)) ||
+             ( colDistance != 0 && Math.abs(colDistance) > Math.abs(pos.col - pacmanPos.col));
+            if(isBetter){
+                board[monstersPos[i].row][monstersPos[i].col] = boardParams.path;
+                monstersPos[i] = pos;
+                board[monstersPos[i].row][monstersPos[i].col] = boardParams.monster;
+                notChanged = false;
+            }
         }
-        //move rigth left
-        else {
-
-        }
-    });
+    }
+  
 }
 
-function getBestRowMove(distance){
-    if(distance < 0){
-        return 1;
-    }
-    if(distance > 0){
-        return -1;
-    }
-    return 0;
-}
-
-function GameSettings(){
-    this.moveUp = 'ArrowUp';
-    this.moveDown = 'ArrowDown';
-    this.moveLeft = 'ArrowLeft';
-    this.moveRight = 'ArrowRight';
-
-    this.ballRange = '70';
-    this.timeLimitation = '60';
-    this.numOfMonsters = '1';
-
-    this.RandomizeSettings = function(){
-        this.ballRange = Math.floor((Math.random() * 90) + 50);
-        this.timeLimitation = Math.floor((Math.random() * 180) + 60);
-        this.numOfMonsters = Math.floor((Math.random() * 3) + 1);
-    }
-
-    this.setBallRange = function(rng){
-        if (50 <= rng && rng <= 90){
-            this.ballRange = rng;
-        }
-    }
-
-    this.setTimeLimitation = function(limit){
-        if(60 <= limit && limit <= 180){
-            this.timeLimitation = limit;
-        }
-        
-    }
-
-    this.setNumOfMonsters = function(monsters){
-        if (1 <= monsters && monsters <= 3){
-            this.numOfMonsters = monster;
-        }
-        
-    }
+function getAvailble(monster){
+   var availbe = [];
+   //down
+   if(monster.row + 1 < 15 && board[monster.row + 1][monster.col] != boardParams.wall){
+         availbe.push({row: monster.row + 1, col: monster.col});
+   }
+   //up
+   if(monster.row - 1 >= 0 && board[monster.row - 1][monster.col] != boardParams.wall){
+        availbe.push({row: monster.row - 1, col: monster.col});
+   }
+   //rigth
+   if(monster.col + 1 < 15 && board[monster.row][monster.col + 1] != boardParams.wall){
+        availbe.push({row: monster.row, col: monster.col + 1});
+   }
+   //low
+   if(monster.col - 1 >= 0 && board[monster.row][monster.col - 1] != boardParams.wall){
+        availbe.push({row: monster.row, col: monster.col - 1});
+   }
+   return availbe;
 }
