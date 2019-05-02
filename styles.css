@@ -18,11 +18,6 @@ body {
     color: azure;
 }
 
-#footer {
-    background: black;
-    height: 5%;
-    color: azure;
-}
 
 #header h1 {
     margin: 0;
@@ -37,25 +32,6 @@ main {
     width: 100%;
     
     /* background: black; */
-}
-
-#nav {
-    padding-bottom: 10010px;
-    margin-bottom: -10000px;
-    float: left;
-    width: 230px;
-    margin-left: -100%;
-    background: black;
-    
-}
-
-#footer {
-    clear: left;    
-    width: 100%;
-    height: 100%;
-    background: black;
-    text-align: center;
-    padding: 4px 0;
 }
 
 #wrapper {
@@ -138,3 +114,13 @@ nav ul a {
 #Welcome {
     display: block;
 }
+
+/* .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: red;
+    color: white;
+    text-align: center;
+  } */
