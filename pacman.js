@@ -175,23 +175,23 @@ var interval;
 function createPacman(center, diraction){
     switch(diraction){
         case "UP":
-            drawPacman(center, 1.40 * Math.PI, 1.75 * Math.PI, center.x + 15, center.y, true);            
+            drawPacman(center, 1.40 * Math.PI, 1.75 * Math.PI, center.x + 7, center.y, true);            
             break;
         case "DOWN":
-            drawPacman(center, 2.3 * Math.PI, 0.6 * Math.PI, center.x + 15, center.y, true);            
+            drawPacman(center, 2.3 * Math.PI, 0.6 * Math.PI, center.x + 7, center.y, true);            
             break;
         case "RIGTH":
-            drawPacman(center, 0.15 * Math.PI, 1.85 * Math.PI, center.x, center.y - 15);
+            drawPacman(center, 0.15 * Math.PI, 1.85 * Math.PI, center.x, center.y - 7);
             break;
         case "LEFT":
-            drawPacman(center, 2.85 * Math.PI, 1.15 * Math.PI, center.x, center.y - 15, true);
+            drawPacman(center, 2.85 * Math.PI, 1.15 * Math.PI, center.x, center.y - 7, true);
             break;     
     }
 }
 
 function drawPacman(center, startAngle, endAngle, eyeX, eyeY, counterClockwise = false ){
     context.beginPath();
-    context.arc(center.x, center.y, 15, startAngle, endAngle, counterClockwise); // half circle
+    context.arc(center.x + 7, center.y + 7, 15, startAngle, endAngle, counterClockwise); // half circle
     context.lineTo(center.x, center.y);
     context.fillStyle = pacColor; //color
     context.fill();
@@ -201,13 +201,35 @@ function drawPacman(center, startAngle, endAngle, eyeX, eyeY, counterClockwise =
     context.fill(); 
 }
 
+function createBalls(center, ballType) {
+    switch(ballType) {
+        case 5:
+            drawBall(center, settings.fiveBallColor);
+            break;
+        case 15:
+            drawBall(center, settings.fifteenBallColor);
+            break;
+        case 25:
+            drawBall(center, settings.twentyFiveBallColor);
+            break;
+    }
+    
+}
+
+function drawBall(center, color){
+    context.beginPath();
+    context.arc(center.x + 7, center.y + 7, 12.5, 0, 2 * Math.PI); // circle
+    context.fillStyle = color;
+    context.fill();
+}
+
 function createMonsters(center){
     context.beginPath();
     context.fillStyle = "rgb(32, 173, 255)" ;
-    context.arc(center.x , center.y, 12.5, Math.PI, 2 * Math.PI);
-    context.lineTo(center.x + 12.5, center.y + 12.5);
-    context.arc(center.x + 12.5 / 2, center.y + 12.5 , 12.5 * 0.5, 0, Math.PI);
-    context.arc(center.x + 12.5  / 2 - 12.5 , center.y + 12.5, 12.5 * 0.5, 0, Math.PI);
+    context.arc(center.x + 7 , center.y + 7 , 7, Math.PI, 2 * Math.PI);
+    context.lineTo(center.x + 19.5, center.y + 19.5);
+    context.arc(center.x + 15 / 2, center.y + 12.5 , 7 * 0.5, 0, Math.PI);
+    context.arc(center.x + 15 / 2 - 12.5 , center.y + 12.5, 7 * 0.5, 0, Math.PI);
     context.closePath();
     context.fill();
     context.strokeStyle = "azure";
@@ -222,15 +244,16 @@ function createWall(center){
 }
 
 function putPacman(){
-    var randomRow;
-    var randomCol;
-    do {
-        randomCol = Math.round(Math.random() * 14);
+    var randomRow = Math.round(Math.random() * 14);
+    var randomCol = Math.round(Math.random() * 14);
+    while (board[randomRow][randomCol] != boardParams.path){
         randomRow = Math.round(Math.random() * 14);
-    }
-    while (board[randomRow][randomCol] != boardParams.path);
+        randomCol = Math.round(Math.random() * 14);
+    };
     
     board[randomRow][randomCol] = boardParams.pacman;
+    shape.i = randomRow;
+    shape.j = randomCol;
 }
 
 function putMonsters(){
@@ -257,95 +280,51 @@ function createBoard(){
     putMonsters();
     putPacman();
 
-    for (var i = 0; i < 15; i++) {
-        for (var j = 0; j < 15; j++) {
-            if(board[i][j] == boardParams.path) {
-                var randomNum = Math.random();
-                if( randomNum < 0.33 && fiveBalls > 0 ){
-                    board[i][j] = boardParams.fiveBall;
-                    shape.i = i;
-                    shape.j = j;
-                    fiveBalls --; 
-                }
-                else if( randomNum >= 0.33 && randomNum < 0.66 && fifteenBalls > 0 ){
-                    board[i][j] = boardParams.fifteenBall;
-                    fifteenBalls --; 
-                    shape.i = i;
-                    shape.j = j;
-                }
-                else if( twentyFiveBalls > 0 ) {
-                    board[i][j] = boardParams.twentyFiveBall;
-                    twentyFiveBalls --; 
-                    shape.i = i;
-                    shape.j = j;
-                }
+    for (var i = 0; i < 15*15; i++) {
+        var randomIs = initiateRandomArray();
+        var randomJs = initiateRandomArray();
+        if(board[randomIs[i]][randomJs[i]] == boardParams.path) {
+            var randomNum = Math.random();
+            if( randomNum < 0.33 && fiveBalls > 0 ){
+                board[randomIs[i]][randomJs[i]] = boardParams.fiveBall;
+                fiveBalls --; 
+            }
+            else if( randomNum >= 0.33 && randomNum < 0.66 && fifteenBalls > 0 ){
+                board[randomIs[i]][randomJs[i]] = boardParams.fifteenBall;
+                fifteenBalls --; 
+            }
+            else if( twentyFiveBalls > 0 ) {
+                board[randomIs[i]][randomJs[i]] = boardParams.twentyFiveBall;
+                twentyFiveBalls --; 
             }
         }
     }
 }
 
-function createBalls(center, ballType) {
-    switch(ballType) {
-        case 5:
-            context.beginPath();
-            context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
-            context.fillStyle = settings.fiveBallColor;
-            context.fill();
-            break;
-        case 15:
-            context.beginPath();
-            context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
-            context.fillStyle = settings.fifteenBallColor;
-            context.fill();
-            break;
-        case 25:
-            context.beginPath();
-            context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
-            context.fillStyle = settings.twentyFiveBallColor;
-            context.fill();
-            break;
+function initiateRandomArray(){
+    var arr = [];
+    for(var i = 0; i < 15; i++){
+        for(var j = 0; j < 15; j++){
+            arr.push(j)
+        }
     }
-    
+
+    var j, x, i;
+    for (i = arr.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        x = arr[i];
+        arr[i] = arr[j];
+        arr[j] = x;
+    }
+    return arr;
 }
 
 function Start() {
    // board = new Array();
     score = 0;
     pacColor = "white";
-    // var cnt = 100;
-    // var food_remain = 50;
-    // var pacman_remain = 1;
     start_time = new Date();
     createBoard();
-    // for (var i = 0; i < 10; i++) {
-    //     board[i] = new Array();
-    //     //put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
-    //     for (var j = 0; j < 10; j++) {
-    //         if ((i === 3 && j === 3) || (i === 3 && j === 4) || (i === 3 && j === 5) || (i === 6 && j === 1) || (i === 6 && j === 2)) {
-    //             board[i][j] = 4;
-    //         } else {
-    //             var randomNum = Math.random();
-    //             if (randomNum <= 1.0 * food_remain / cnt) {
-    //                 food_remain--;
-    //                 board[i][j] = 1;
-    //             } else if (randomNum < 1.0 * (pacman_remain + food_remain) / cnt) {
-    //                 shape.i = i;
-    //                 shape.j = j;
-    //                 pacman_remain--;
-    //                 board[i][j] = 2;
-    //             } else {
-    //                 board[i][j] = 0;
-    //             }
-    //             cnt--;
-    //         }
-    //     }
-    //     //put monster
-    // }
-    // while (food_remain > 0) {
-    //     var emptyCell = findRandomEmptyCell(board);
-    //     board[emptyCell[0]][emptyCell[1]] = 1;
-    //     food_remain--;
-    // }
     keysDown = {};
     addEventListener("keydown", function (e) {
         keysDown[e.code] = true;
@@ -355,17 +334,6 @@ function Start() {
     }, false);
     interval = setInterval(UpdatePosition, 250);
 }
-
-
-// function findRandomEmptyCell(board) {
-//     var i = Math.floor((Math.random() * 9) + 1);
-//     var j = Math.floor((Math.random() * 9) + 1);
-//     while (board[i][j] !== 0) {
-//         i = Math.floor((Math.random() * 9) + 1);
-//         j = Math.floor((Math.random() * 9) + 1);
-//     }
-//     return [i, j];
-// }
 
 /**
  * @return {number}
@@ -395,7 +363,7 @@ function Draw() {
             center.x = i * 40 + 15;
             center.y = j * 40 + 15;
             if (board[i][j] === boardParams.pacman) {
-                createPacman(center, "RIGTH");
+                createPacman(center, "UP");
             } else if (board[i][j] === boardParams.monster) {
                 createMonsters(center);
             } else if (board[i][j] === boardParams.wall) {
