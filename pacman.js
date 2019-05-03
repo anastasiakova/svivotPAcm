@@ -267,8 +267,10 @@ function createMonsters(center){
 function createWall(center){
     context.beginPath();
     context.rect(center.x - 15, center.y - 15, 40, 40);
-    context.fillStyle = "grey"; //color
-    context.fill();                      
+    context.fillStyle = "black"; //color
+    context.fill();   
+    context.strokeStyle = "azure";
+    context.stroke();                   
 }
 
 function createSmiley(center){
