@@ -11,19 +11,19 @@
                      
 <body onload="toggleVisibility('Welcome');" >		
         <div id="wrapper">
+                <div class="left">
                 <script type="text/javascript" src="menu.js"></script>           
                 <nav style="margin-top: 10%;">
                          <li><a id="welcomeLink" href="#" onclick="toggleVisibility('Welcome')">Welcome</a></li>
                          <li><a id="settingsLink" href="#" onclick="toggleVisibility('Settings')">Settings</a></li>
-                         <li><a id="signupLink" href="#" onclick="toggleVisibility('SignUp')">Sign Up</a></li>
-                         <li><a id="loginLink" href="#" onclick="toggleVisibility('LogIn')">Log In</a></li>
                          <li><a id="aboutLink" href="#" onclick="toggleVisibility('About')">About</a></li>
                 </nav>
-                <div id="loggedInUser" style="margin-left: 30%; color: azure"></div>
-                <div id="Welcome" class="txt">
+                </div>
+                <div id="loggedInUser" style="color:azure; position:fixed; margin:3% 40%;"></div>
+                <div id="Welcome" class="rigth">
                 <!-- welcome -->
-                <img style="margin-left: 40%;" src="logo.png" width="200" />
-                <section style="margin-left:40%; ">
+                <img style="margin-left: 30%; margin-top: 10%" src="logo.png" width="200" />
+                <section style="margin-left:30%; ">
                                 <!-- <img src="logo.png" width="200" /> -->
                                 <div class="button" onclick="toggleVisibility('LogIn')">
                                         <p>Log In</p>
@@ -32,14 +32,10 @@
                                 <div class="button" onclick="toggleVisibility('SignUp')">
                                        <p>Registration</p>
                                 </div>
-                                              
-                                <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-                                <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.12.1/TweenMax.min.js"></script>
-                                 <script type="text/javascript" src="buttons.js"></script> -->
                 </section> 
                 </div>
                 <!-- pacman -->
-                <div id="Play">
+                <div id="Play" class="rigth" style="margin: 5% -15%;">
                         <section style="color: white;">
                                 Lives:
                                 <input class="stats" id="lblLives" type="text"/>
@@ -56,9 +52,9 @@
                         </section> 
                 </div>
                 
-                <div id="SignUp" class="txt">
+                <div id="SignUp" class="rigth margin10">
                 <!-- sign up -->
-                <section style="margin-right:20%; color: azure;">
+                <section style="color: azure;">
                         <form class="form-style-9">
                                  <ul>
                                          <li>
@@ -90,9 +86,9 @@
                         <script type="text/javascript" src="users.js"></script>
                 </section>
                 </div> 
-                <div id="LogIn" class="txt">
+                <div id="LogIn" class="rigth margin10">
                 <!-- log in -->
-                        <section style="margin-right:20%; color: azure;">
+                        <section style="color: azure;">
                                 <form class="form-style-9" action="#" >
                                         <ul>
                                         <li>
@@ -111,8 +107,8 @@
                         </section>
                 </div>
           <!-- config -->
-                <div id="Settings" class="txt">
-                <section style="margin-right:20%; color: azure;">
+                <div id="Settings" class="rigth" style="margin: 2% 10%;">
+                <section style="color: azure;">
                         <form class="form-style-9">
                                 <ul>
                                         <!-- is keys default -->

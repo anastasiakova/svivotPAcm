@@ -16,7 +16,7 @@ function toggleKeysPickerVisability(checkbox, hidden) {
 function toggleVisibility(selectedTab) {
 
     // Get a list of your content divs
-    var content = document.getElementsByClassName('txt');
+    var content = document.getElementsByClassName('rigth');
 
     // Loop through, hiding non-selected divs, and showing selected div
     for(var i=0; i<content.length; i++) {
@@ -28,11 +28,17 @@ function toggleVisibility(selectedTab) {
     }
 
     if(selectedTab != 'Play'){
-        $('#Play')[0].style.display = 'none';
-        //killMusic();
+        // $('#Play')[0].style.display = 'none';
+        // //killMusic();
         killGame();
     }
-    else{
-        $('#Play')[0].style.display = 'block';
+    $('#loggedInUser').show();
+
+    if(selectedTab == 'Welcome'){
+        $('#loggedInUser').hide();
     }
+    
+    // else{
+    //     $('#Play')[0].style.display = 'block';
+    // }
 }

@@ -24,13 +24,13 @@ function tryLogIn(){
     var username = $("[name='loginUserName']").val();
     var pwd = $("[name='loginPassword']").val();
     if(users.includes(username) && pwds[users.indexOf(username)] == pwd){
+        $('#loggedInUser')[0].innerText = "Hello, " + username + "!";
         toggleVisibility('Settings');
         var nu = $('#signupLink');
         $('#signupLink').remove();
         $('#loginLink').remove();
         window.scrollTo(0, 0);
         isLoggedIn = true;
-        $('#loggedInUser')[0].innerText = "Hello, " + username + "!";
     }
     else
     {

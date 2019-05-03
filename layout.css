@@ -2,7 +2,7 @@
     background-color: black;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
-    box-sizing: border-box;  
+    box-sizing: border-box; 
 }
 header{
     color: azure;
@@ -11,21 +11,18 @@ header{
 .wrapper{
     padding: 1em;
     margin: 0 0 1em 0;
+    
 }
 @media screen and (min-width:600px) {
     nav {
      position: absolute;
      /* float: left; */
       width: 10%;
-    }
-    section {
-      margin-left: 25%;
-    }
-   
-  }
+     } 
+  } 
   @media screen and (max-width:599px) {
     nav li {
-      display: inline;
+      display: block;
     }
   }
 
@@ -54,8 +51,6 @@ header{
     color: rgb(104, 104, 104);
   }
 
-  /* buuton */
-  
 .button {
     background: #3498db;
     width: 180px;
@@ -307,4 +302,16 @@ footer{
   border-radius: 50%;
   display: inline-block;
   margin: 10px; 
+}
+
+.left{
+  float:left;
+  width: 20%;
+}
+.rigth{
+  float:right;
+  width: 80%;
+}
+.margin10{
+  margin:10%;
 }
