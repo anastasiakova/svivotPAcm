@@ -87,10 +87,14 @@ function setSettings(){
     checkBallsAmount(ballsRange);
 }
 function deafaultKeys(){
-    $("#defaultUp").prop('checked', true);
-    $("#defaultDown").prop('checked', true);
-    $("#defaultLeft").prop('checked', true);
-    $("#defaultRight").prop('checked', true);
+    document.getElementById("defaultUp").checked = true;
+    document.getElementById("defaultDown").checked = true;
+    document.getElementById("defaultLeft").checked = true;
+    document.getElementById("defaultRight").checked = true;
+    // $("#defaultUp").prop(':checked', true);
+    // $("#defaultDown").prop('checked', true);
+    // $("#defaultLeft").prop('checked', true);
+    // $("#defaultRight").prop('checked', true);
 
     $('#defaultUp').change();
     $('#defaultDown').change();
