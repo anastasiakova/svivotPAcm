@@ -492,7 +492,7 @@ function UpdatePosition() {
             var currentTime = new Date();
             time_remaining = (currentTime - start_time) / 1000;
 
-            if(playTimeLimitation - time_remaining <= 55 && !styleChanged){
+            if(playTimeLimitation - time_remaining <= 10 && !styleChanged){
                 timeAlmostOver();
             }
 
