@@ -460,36 +460,48 @@ function UpdatePosition() {
         time_remaining = (currentTime - start_time) / 1000;
 
         if(settings.timeLimitation - time_remaining <= 10 && !styleChanged){
-            styleChanged = true;
-            originalStyle = $("#lblTime")[0].style;
-            $("#lblTime")[0].style.color = 'red';
-            $("#lblTime")[0].style.border = '1px solid red';
+            timeAlmostOver();
         }
 
         if (time_remaining >= settings.timeLimitation) {
-            window.clearInterval(interval);
-            lost = true;
-            if(score < 150){
-                alert("You can do better");
-            }
-            else
-            {
-                alert("We have a winner!!!");
-            }
+            timeOver();
         }
         
         if(lost){
-            if (confirm('Wanna have some more fun?')) {
-                lost = false;
-                initializeValues();
-                Start();
-            } else {
-                toggleVisibility('Welcome');
-            }
+          onLost();
         }
         else{
             Draw();
         }   
+    }
+}
+
+function timeAlmostOver(){
+    styleChanged = true;
+    originalStyle = $("#lblTime")[0].style;
+    $("#lblTime")[0].style.color = 'red';
+    $("#lblTime")[0].style.border = '1px solid red';
+}
+
+function timeOver(){
+    window.clearInterval(interval);
+    lost = true;
+    if(score < 150){
+        alert("You can do better");
+    }
+    else
+    {
+        alert("We have a winner!!!");
+    }
+}
+
+function onLost(){
+    if (confirm('Wanna have some more fun?')) {
+        lost = false;
+        initializeValues();
+        Start();
+    } else {
+        toggleVisibility('Welcome');
     }
 }
 
