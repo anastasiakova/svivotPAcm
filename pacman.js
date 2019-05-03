@@ -113,10 +113,10 @@ function randomSettings(){
     $("#fifteenBallColor").val(getRandomColor());
     $("#fiveBallColor").val(getRandomColor());
 
-     randomRange($("#ballsRange"), $("#ballsRangeOutput"));
+     randomRange($("#ballsAmountRange"), $("#ballsRangeOutput"));
 
      // time
-     randomRange($("#timeLimitation"), $("#timeLimitationOutput"));
+     randomRange($("#timeLimitationRange"), $("#timeLimitationOutput"));
 
       // monsters
       var array = document.getElementsByName('numOfMonsters');
@@ -322,11 +322,11 @@ function putMonsters(){
            monstersPos = [{row: 0, col:0},{row: 14, col :14}];
            break;
         case 3:
-          board[0][0] = boardParams.monster ; 
-          board[0][14] = boardParams.monster; 
-          board[14][14] = boardParams.monster; 
-          monstersPos = [{row: 0, col:0},{row: 14, col :14},{row: 0, col: 14}];
-          break;
+            board[0][0] = boardParams.monster ; 
+            board[0][14] = boardParams.monster; 
+            board[14][14] = boardParams.monster; 
+            monstersPos = [{row: 0, col:0},{row: 14, col :14},{row: 0, col: 14}];
+            break;
     }
 }
 
@@ -620,6 +620,9 @@ function moveMonsters(){
                     monstersPos[i] = pos;
                     board[monstersPos[i].row][monstersPos[i].col] = boardParams.monster; 
                     notChanged = false;
+                    if(board[pos.row][pos.col] === boardParams.pacman){
+                        getEaten();
+                    }
                 }
             }
         }
@@ -628,6 +631,9 @@ function moveMonsters(){
             board[monstersPos[i].row][monstersPos[i].col] = ballsBoard[monstersPos[i].row][monstersPos[i].col];
             monstersPos[i] = pos;
             board[monstersPos[i].row][monstersPos[i].col] = boardParams.monster; 
+            if(board[pos.row][pos.col] === boardParams.pacman){
+                getEaten();
+            }
         }
     } 
 }
