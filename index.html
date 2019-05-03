@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+  
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="layout.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <header>
         <img src="logo.png" width="150" style="margin-top:-50px; margin-bottom: -50px;" />
@@ -11,12 +14,94 @@
                      
 <body onload="toggleVisibility('Welcome');" >		
         <div id="wrapper">
+                        <style type="text/css">
+
+
+                                .web_dialog
+                                {
+                                   display: none;
+                                   position: fixed;
+                                   width: 380px;
+                                   height: 200px;
+                                   top: 50%;
+                                   left: 50%;
+                                   margin-left: -190px;
+                                   margin-top: -100px;
+                                   background-color: #ffffff;
+                                   border: 2px solid #336699;
+                                   padding: 0px;
+                                   z-index: 102;
+                                   font-family: Verdana;
+                                   font-size: 10pt;
+                                   
+                                }
+                                
+                                </style>
+                                
+                                <script src="modal.js" type="text/javascript"></script>
+                                
+                                <script type="text/javascript">
+                                
+                                   $(document).ready(function ()
+                                   {
+                                
+                                      $("#aboutLink").click(function ()
+                                      {
+                                         $("#dialog").fadeIn(500);
+                                      });
+                                
+                                      $("#btnClose").click(function ()
+                                      {
+                                         $("#dialog").fadeOut(500);
+                                      });
+                                      
+                                      $(document).click(function(e) {
+                                        if (!$(e.target).closest('#dialog').length && e.target.id != "aboutLink") {
+                                                $("#dialog").fadeOut(500);
+
+                                        }
+                                        });
+
+                                        $(document).keydown(function(e) { 
+                                        if (e.keyCode == 27) { 
+                                                $("#dialog").fadeOut(500);
+                                        } 
+                                        });
+
+                                   });
+                                        
+                                </script>
+                                
+                                </head>
+                                
+                                <body>
+                                
+                                
+                                    
+                                <br><br>       
+                                    
+                                <section id="dialog" class="web_dialog">
+                                        <img id="btnClose" src="exit_btn.png" style="height: 20px; width: 20px; margin-left: 93%; margin-top: 1.2%;">
+                                        <p class="dialogContent" style="display: inline;">We used jQuery plugin in order to get elements by ID, by Name, or by class.
+                                        <br>
+                                        <br>
+                                        We have used a template for our forms, taken from <a style="background: none;" href="https://www.sanwebe.com/2014/08/css-html-forms-designs">here</a>.
+                                        <br>
+                                        <br>
+                                         Our major hardships were dealing with the fact that Java Script is not verbose, and is difficult to debug.
+                                        <br>
+                                        <br>
+                                        Another hardship was having to develop cooperatively on the same files.
+                                </p>
+                                </section>
+                <script type="text/javascript" src="menu.js"></script>   
                 <div class="left">
                 <script type="text/javascript" src="menu.js"></script>           
                 <nav style="margin-top: 10%;">
                          <li><a id="welcomeLink" href="#" onclick="toggleVisibility('Welcome')">Welcome</a></li>
                          <li><a id="settingsLink" href="#" onclick="toggleVisibility('Settings')">Settings</a></li>
-                         <li><a id="aboutLink" href="#" onclick="toggleVisibility('About')">About</a></li>
+                         <li><a id="aboutLink" href="#" onclick="toggleVisibility('Welcome')">About</a></li>
+                         <!-- <a href="#bannerformmodal" data-toggle="modal" data-target="#bannerformmodal">Load me</a> -->
                 </nav>
                 </div>
                 <div id="loggedInUser" style="color:azure; position:fixed; margin:3% 40%;"></div>
@@ -111,14 +196,6 @@
                 <section style="color: azure;">
                         <form class="form-style-9">
                                 <ul>
-                                        <!-- is keys default -->
-                                        <!-- <li>
-                                             <label for="defultKeys">
-                                                        Default Arrow Kyes
-                                             </label>
-                                             <input type="checkbox" name="defultKeys" id= "defultKeys" checked="true"/>
-                                         </li> -->
-                                <!--choose keys  -->
                                 <li>
                                         <label> Up Move: 
                                                 Default - up arrow <input type="checkbox" name="defaultKeys" id= "defaultUp" checked="true" />
