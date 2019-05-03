@@ -29,7 +29,8 @@ function toggleVisibility(selectedTab) {
 
     if(selectedTab != 'Play'){
         $('#Play')[0].style.display = 'none';
-        killMusic();
+        //killMusic();
+        killGame();
     }
     else{
         $('#Play')[0].style.display = 'block';

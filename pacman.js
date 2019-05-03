@@ -378,10 +378,12 @@ function initiateRandomArray(){
 }
 
 function Start(shouldGetNewTime = true) {
+    lost = false;
     pacColor = "white";
     if(shouldGetNewTime){
         start_time = new Date();        
         myAudio.play();
+        initializeValues();
     }
     createBoard();
     keysDown = {};
@@ -504,7 +506,7 @@ function onLost(){
         Start();
     } else {
         toggleVisibility('Welcome');
-        killMusic();
+        killGame();
     }
 }
 
@@ -646,7 +648,8 @@ function getAvailble(monster){
     return availbe;
 }    
 
-function killMusic(){
+function killGame(){
     myAudio.pause();
+    window.clearInterval(interval);
 }
 
