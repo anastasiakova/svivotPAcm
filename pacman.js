@@ -91,10 +91,6 @@ function deafaultKeys(){
     document.getElementById("defaultDown").checked = true;
     document.getElementById("defaultLeft").checked = true;
     document.getElementById("defaultRight").checked = true;
-    // $("#defaultUp").prop(':checked', true);
-    // $("#defaultDown").prop('checked', true);
-    // $("#defaultLeft").prop('checked', true);
-    // $("#defaultRight").prop('checked', true);
 
     $('#defaultUp').change();
     $('#defaultDown').change();
@@ -303,9 +299,9 @@ function drawClock(center) {
 
 function putSmiley(){
     if(smileyPos == undefined || smileyPos.row !=-1){
-        var pos = getRandomPos();
-        board[pos.row][pos.col] = boardParams.smiley;
-        smileyPos = pos;
+        // var pos = getRandomPos();
+        board[14][0] = boardParams.smiley;
+        smileyPos = {row: 14, col: 0};
     }
 }
 
