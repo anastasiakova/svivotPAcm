@@ -61,7 +61,7 @@ function checkBallsAmount(maxBallsNumber){
 }
 
 function setSettings(){
-    const ballsRange = $("#ballsRange").val();
+    const ballsRange = $("#ballsAmountRange").val();
     this.settings = {
         //keys 
         upKey: setKeysValue($("#defaultUp"), "ArrowUp", $("#keysup")),
@@ -443,85 +443,29 @@ function UpdatePosition() {
         var origI = pacmanPos.row;
         var origJ = pacmanPos.col;
         moveMonsters();
+
         var x = GetKeyPressed();
-        if (x === 1) {
-            pacmanLastDiraction = 1;
-            if (pacmanPos.col > 0 && board[pacmanPos.row][pacmanPos.col - 1] !== 4) {
-                pacmanPos.col--;
-            }
-        }
-        if (x === 2) {
-            pacmanLastDiraction = 2;
-            if (pacmanPos.col < 14 && board[pacmanPos.row][pacmanPos.col + 1] !== 4) {
-                pacmanPos.col++;
-            }
-        }
-        if (x === 3) {
-            pacmanLastDiraction = 3;
-            if (pacmanPos.row > 0 && board[pacmanPos.row - 1][pacmanPos.col] !== 4) {
-                pacmanPos.row--;
-            }
-        }
-        if (x === 4) {
-            pacmanLastDiraction = 4;
-            if (pacmanPos.row < 14 && board[pacmanPos.row + 1][pacmanPos.col] !== 4) {
-                pacmanPos.row++;
-            }
-        }
-        if (board[pacmanPos.row][pacmanPos.col] === 1) {
-            score++;
-        }
+        movePacman(x);
+
         if(board[pacmanPos.row][pacmanPos.col] === boardParams.monster){
-            lives--;
-            score -= 10;
-            if (lives > 0)
-            {
-                alert("Oh no..! You just got bitten by a ghost!\nOnly " + lives + " live(s) left.\nClick OK to continue playing.");
-                initializeBoard();
-                var shouldGetNewTime = false;
-                Start(shouldGetNewTime);
-
-            }
-            else
-            {
-                window.clearInterval(interval);
-                lost = true;
-                alert("you Lost!");
-            }
+            getEaten();
         }
 
-        if(board[pacmanPos.row][pacmanPos.col] === boardParams.twentyFiveBall){
-            score += 25;
-            playTimeTwentyFiveBallAmount--;
-        }
-        
-        if(board[pacmanPos.row][pacmanPos.col] === boardParams.fifteenBall){
-            score += 15;
-            playTimeFifteenBallAmount--;
-        }
-
-        if(board[pacmanPos.row][pacmanPos.col] === boardParams.fiveBall){
-            score += 5;
-            playTimeFiveBallAmount--;
-        }
+        updateScore();
 
         board[origI][origJ] = 0;
         ballsBoard[origI][origJ] = 0;
         board[pacmanPos.row][pacmanPos.col] = 2;
-    var currentTime = new Date();
-    time_remaining = (currentTime - start_time) / 1000;
-    if(settings.timeLimitation - time_remaining <= 10 && !styleChanged){
-        styleChanged = true;
-        originalStyle = $("#lblTime")[0].style;
-        $("#lblTime")[0].style.color = 'red';
-        $("#lblTime")[0].style.border = '1px solid red';
-    }
-    if (time_remaining >= settings.timeLimitation) {
-        window.clearInterval(interval);
-        lost = true;
-        if(score < 150){
-            alert("You can do better");
+        var currentTime = new Date();
+        time_remaining = (currentTime - start_time) / 1000;
+
+        if(settings.timeLimitation - time_remaining <= 10 && !styleChanged){
+            styleChanged = true;
+            originalStyle = $("#lblTime")[0].style;
+            $("#lblTime")[0].style.color = 'red';
+            $("#lblTime")[0].style.border = '1px solid red';
         }
+
         if (time_remaining >= settings.timeLimitation) {
             window.clearInterval(interval);
             lost = true;
@@ -535,7 +479,6 @@ function UpdatePosition() {
         }
         
         if(lost){
-                
             if (confirm('Wanna have some more fun?')) {
                 lost = false;
                 initializeValues();
@@ -543,9 +486,73 @@ function UpdatePosition() {
             } else {
                 toggleVisibility('Welcome');
             }
-        }else{
+        }
+        else{
             Draw();
         }   
+    }
+}
+
+function updateScore(){
+    if(board[pacmanPos.row][pacmanPos.col] === boardParams.twentyFiveBall){
+        score += 25;
+        playTimeTwentyFiveBallAmount--;
+    }
+    
+    if(board[pacmanPos.row][pacmanPos.col] === boardParams.fifteenBall){
+        score += 15;
+        playTimeFifteenBallAmount--;
+    }
+
+    if(board[pacmanPos.row][pacmanPos.col] === boardParams.fiveBall){
+        score += 5;
+        playTimeFiveBallAmount--;
+    }
+}
+
+function getEaten(){
+    lives--;
+    score -= 10;
+    if (lives > 0)
+    {
+        alert("Oh no..! You just got bitten by a ghost!\nOnly " + lives + " live(s) left.\nClick OK to continue playing.");
+        initializeBoard();
+        var shouldGetNewTime = false;
+        Start(shouldGetNewTime);
+
+    }
+    else
+    {
+        window.clearInterval(interval);
+        lost = true;
+        alert("you Lost!");
+    }
+}
+
+function movePacman(move){
+    if (move === 1) {
+        pacmanLastDiraction = 1;
+        if (pacmanPos.col > 0 && board[pacmanPos.row][pacmanPos.col - 1] !== 4) {
+            pacmanPos.col--;
+        }
+    }
+    if (move === 2) {
+        pacmanLastDiraction = 2;
+        if (pacmanPos.col < 14 && board[pacmanPos.row][pacmanPos.col + 1] !== 4) {
+            pacmanPos.col++;
+        }
+    }
+    if (move === 3) {
+        pacmanLastDiraction = 3;
+        if (pacmanPos.row > 0 && board[pacmanPos.row - 1][pacmanPos.col] !== 4) {
+            pacmanPos.row--;
+        }
+    }
+    if (move === 4) {
+        pacmanLastDiraction = 4;
+        if (pacmanPos.row < 14 && board[pacmanPos.row + 1][pacmanPos.col] !== 4) {
+            pacmanPos.row++;
+        }
     }
 }
 
@@ -623,5 +630,5 @@ function getAvailble(monster){
     }
     return availbe;
 }    
-}
+
 
