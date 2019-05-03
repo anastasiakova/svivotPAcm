@@ -6,6 +6,8 @@ var pwds = [
     "a"
 ];
 
+var isLoggedIn = false;
+
 function addUser(username, pwd){
     if(users.includes(username))
     {
@@ -27,6 +29,7 @@ function tryLogIn(){
         $('#signupLink').remove();
         $('#loginLink').remove();
         window.scrollTo(0, 0);
+        isLoggedIn = true;
         $('#loggedInUser')[0].innerText = "Hello, " + username + "!";
     }
     else
@@ -96,4 +99,16 @@ function validateDate(str){
 function validateEmail(email){
     var re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     return re.test(email);
+}
+
+function playClicked(){
+    if(isLoggedIn){
+        setSettings();
+        toggleVisibility('Play');
+        Start();
+    }
+    else
+    {
+        alert('In order to play you must log in first.\nPlease register, it is free!');
+    }
 }

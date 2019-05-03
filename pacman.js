@@ -386,7 +386,7 @@ function Start(shouldGetNewTime = true) {
     lost = false;
     pacColor = "white";
     if(shouldGetNewTime){
-        start_time = new Date();        
+        start_time = new Date();
         initializeValues();
         interval = setInterval(UpdatePosition, 250);
         smileyPos = undefined;
