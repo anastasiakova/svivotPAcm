@@ -27,6 +27,7 @@ function tryLogIn(){
         $('#signupLink').remove();
         $('#loginLink').remove();
         window.scrollTo(0, 0);
+        $('#loggedInUser')[0].innerText = "Hello, " + username + "!";
     }
     else
     {

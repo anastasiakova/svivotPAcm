@@ -12,25 +12,26 @@
 <body onload="toggleVisibility('Welcome');" >		
         <div id="wrapper">
                 <script type="text/javascript" src="menu.js"></script>           
-                <nav>
+                <nav style="margin-top: 10%;">
                          <li><a id="welcomeLink" href="#" onclick="toggleVisibility('Welcome')">Welcome</a></li>
                          <li><a id="settingsLink" href="#" onclick="toggleVisibility('Settings')">Settings</a></li>
-                         
                          <li><a id="signupLink" href="#" onclick="toggleVisibility('SignUp')">Sign Up</a></li>
                          <li><a id="loginLink" href="#" onclick="toggleVisibility('LogIn')">Log In</a></li>
                          <li><a id="aboutLink" href="#" onclick="toggleVisibility('About')">About</a></li>
                 </nav>
+                <div id="loggedInUser" style="margin-left: 30%; color: azure"></div>
                 <div id="Welcome" class="txt">
                 <!-- welcome -->
+                <img style="margin-left: 40%;" src="logo.png" width="200" />
                 <section style="margin-left:40%; ">
-                                <img src="logo.png" width="200" />
+                                <!-- <img src="logo.png" width="200" /> -->
                                 <div class="button" onclick="toggleVisibility('LogIn')">
                                         <p>Log In</p>
                                 </div> 
                                 <br/>
                                 <div class="button" onclick="toggleVisibility('SignUp')">
                                        <p>Registration</p>
-                                </div>       
+                                </div>
                                               
                                 <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
                                 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.12.1/TweenMax.min.js"></script>
@@ -48,6 +49,9 @@
                                 <input class="stats" id="lblTime" type="text"/>
                                 <br>
                                 <canvas id="canvas" height="600" width="600"></canvas>
+                                <br>
+                                <br>
+                                <input type="checkbox" id="mute">Mute Music<br>
                                 <script type="text/javascript" src="pacman.js"></script>
                         </section> 
                 </div>

@@ -382,11 +382,11 @@ function initiateRandomArray(){
 }
 
 function Start(shouldGetNewTime = true) {
+    ChangeMusic();
     lost = false;
     pacColor = "white";
     if(shouldGetNewTime){
         start_time = new Date();        
-        myAudio.play();
         initializeValues();
         interval = setInterval(UpdatePosition, 250);
         smileyPos = undefined;
@@ -680,3 +680,23 @@ function killGame(){
     window.clearInterval(interval);
 }
 
+$("#mute").change(function() {
+    if($('#mute').is(":checked"))
+    {
+        myAudio.pause();
+    }
+    else{
+        myAudio.play();
+    }
+});
+
+function ChangeMusic(){
+    if($('#mute').is(":checked"))
+    {
+        myAudio.pause();
+    }
+    else{
+        myAudio.play();
+    }
+
+}
