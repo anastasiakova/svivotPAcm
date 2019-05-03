@@ -492,7 +492,7 @@ function UpdatePosition() {
             var currentTime = new Date();
             time_remaining = (currentTime - start_time) / 1000;
 
-            if(playTimeLimitation - time_remaining <= 10 && !styleChanged){
+            if(playTimeLimitation - time_remaining <= 55 && !styleChanged){
                 timeAlmostOver();
             }
 
@@ -532,7 +532,7 @@ function timeOver(){
 function onLost(){
     if (confirm('Wanna have some more fun?')) {
         lost = false;
-        initializeValues();
+       // initializeValues();
         Start();
     } else {
         toggleVisibility('Welcome');
@@ -576,7 +576,8 @@ function getEaten(){
     if (lives > 0)
     {
         alert("Oh no..! You just got bitten by a ghost!\nOnly " + lives + " live(s) left.\nClick OK to continue playing.");
-        initializeBoard();
+        var shuldSaveClock = true;
+        initializeBoard(shuldSaveClock);
         var shouldGetNewTime = false;
         Start(shouldGetNewTime);
 
@@ -625,15 +626,19 @@ function initializeValues(){
     lives = 3;
     if(styleChanged){
         $("#lblTime")[0].style = originalStyle;
+        canGetClock = true;
+        styleChanged = false;
     }
     initializeBoard();
 }
 
-function initializeBoard() {
+function initializeBoard(shuldSaveClock = false) {
     for (let index = 0; index < board.length; index++) {
         for (let j = 0; j < board[0].length; j++) {
-            if (board[index][j] != boardParams.wall && board[index][j] != boardParams.clock) {
+            var clock = shuldSaveClock ? board[index][j] != boardParams.clock : true;
+            if (board[index][j] != boardParams.wall && clock) {
                 board[index][j] = boardParams.path;
+                ballsBoard[index][j] = boardParams.path;
             }
         }
     }
