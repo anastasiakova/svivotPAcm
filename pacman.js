@@ -1,4 +1,3 @@
-
 var settings = {
     // keys
 
@@ -193,6 +192,8 @@ var lost = false;
 var pacmanLastDiraction = 4;
 var originalStyle;
 var styleChanged = false;
+var myAudio = new Audio('bgMusic.wav');
+myAudio.loop = true;
 
 //Start();
 
@@ -379,7 +380,8 @@ function initiateRandomArray(){
 function Start(shouldGetNewTime = true) {
     pacColor = "white";
     if(shouldGetNewTime){
-        start_time = new Date();
+        start_time = new Date();        
+        myAudio.play();
     }
     createBoard();
     keysDown = {};
@@ -502,6 +504,7 @@ function onLost(){
         Start();
     } else {
         toggleVisibility('Welcome');
+        killMusic();
     }
 }
 
@@ -643,4 +646,7 @@ function getAvailble(monster){
     return availbe;
 }    
 
+function killMusic(){
+    myAudio.pause();
+}
 
