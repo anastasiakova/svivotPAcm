@@ -649,6 +649,7 @@ function getAvailble(monster){
 }    
 
 function killGame(){
+    lost = true;
     myAudio.pause();
     window.clearInterval(interval);
 }
