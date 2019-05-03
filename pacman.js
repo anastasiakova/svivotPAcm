@@ -26,7 +26,7 @@ var settings = {
 var playTimeTwentyFiveBallAmount = settings.twentyFiveBallAmount;
 var playTimeFifteenBallAmount = settings.fifteenBallAmount;
 var playTimeFiveBallAmount = settings.fiveBallAmount;
-var playTimeTimeLimitation = settings.timeLimitation;
+var playTimeLimitation = settings.timeLimitation;
 
 function setKeysValue(key, keyVal ,textVal){
     if(key.is(':checked')){
@@ -143,7 +143,8 @@ var boardParams = {
     "fifteenBall": 15,
     "twentyFiveBall": 25,
     "path": 0,
-    "smiley": 50
+    "smiley": 50,
+    "clock": 1
 };
 var board = [
     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -184,6 +185,7 @@ var lives = 3;
 var pacColor;
 var start_time;
 var time_remaining;
+var playTimeLimitation;
 var interval;
 var monstersPos;
 var pacmanPos;
@@ -192,6 +194,7 @@ var lost = false;
 var pacmanLastDiraction = 4;
 var originalStyle;
 var styleChanged = false;
+var canGetClock = true;
 var myAudio = new Audio('bgMusic.wav');
 myAudio.loop = true;
 
@@ -241,7 +244,6 @@ function createBalls(center, ballType) {
             drawBall(center, settings.twentyFiveBallColor);
             break;
     }
-    
 }
 
 function drawBall(center, color){
@@ -286,6 +288,13 @@ function createSmiley(center){
     context.fillStyle = "#00DEFF";
     context.fill();
     context.stroke();
+}
+function drawClock(center) {
+    var clockImg = new Image();
+    clockImg.src = 'clock.gif';
+    clockImg.onload = function(){
+        context.drawImage(clockImg, center.x - 7.5, center.y, 20, 20);
+    }
 }
 
 function putSmiley(){
@@ -422,7 +431,7 @@ function GetKeyPressed() {
 function Draw(diraction) {
     context.clearRect(0, 0, canvas.width, canvas.height); //clean board
     lblScore.value = score;
-    lblTime.value = Math.round(settings.timeLimitation - time_remaining);
+    lblTime.value = Math.round(playTimeLimitation - time_remaining);
     lblLives.value = lives;
     for (var i = 0; i < 15; i++) {
         for (var j = 0; j < 15; j++) {
@@ -439,10 +448,26 @@ function Draw(diraction) {
             else if(board[i][j] === boardParams.smiley){
                createSmiley(center);
             }
+            else if(board[i][j] === boardParams.clock){
+                drawClock(center);
+            }
             else if(board[i][j] === boardParams.path){  }
             else {
                 createBalls(center, board[i][j]);
             }
+        }
+    }
+
+    if(styleChanged && canGetClock){
+        var pos = moveRandom(monstersPos[0]);
+        if(board[pos.row][pos.col] == boardParams.path){
+            board[pos.row][pos.col] = boardParams.clock;
+            ballsBoard[pos.row][pos.col] = boardParams.clock;
+            var center = new Object();
+            center.x = pos.row * 40 + 15;
+            center.y = pos.col * 40 + 15;
+            drawClock(center);
+            canGetClock = false;
         }
     }
 }
@@ -467,11 +492,11 @@ function UpdatePosition() {
             var currentTime = new Date();
             time_remaining = (currentTime - start_time) / 1000;
 
-            if(settings.timeLimitation - time_remaining <= 10 && !styleChanged){
+            if(playTimeLimitation - time_remaining <= 10 && !styleChanged){
                 timeAlmostOver();
             }
 
-            if (time_remaining >= settings.timeLimitation) {
+            if (time_remaining >= playTimeLimitation) {
                 timeOver();
             }
             moveMonsters();
@@ -489,7 +514,7 @@ function timeAlmostOver(){
     styleChanged = true;
     originalStyle = $("#lblTime")[0].style;
     $("#lblTime")[0].style.color = 'red';
-    $("#lblTime")[0].style.border = '1px solid red';
+    $("#lblTime")[0].style.border = '3px solid red';
 }
 
 function timeOver(){
@@ -530,10 +555,18 @@ function updateScore(){
         score += 5;
         playTimeFiveBallAmount--;
     }
-    if(board[pacmanPos.row][pacmanPos.col] === boardParams.smiley){
+    else if(board[pacmanPos.row][pacmanPos.col] === boardParams.smiley){
         score += 50;
         smileyPos = {row: -1, col: -1};
         board[pacmanPos.row][pacmanPos.col] = 0;
+    }
+    else if(board[pacmanPos.row][pacmanPos.col] === boardParams.clock){
+        playTimeLimitation += 10;
+        canGetClock = true;
+        styleChanged = false;
+        $("#lblTime")[0].style = originalStyle;
+        board[pacmanPos.row][pacmanPos.col] = 0;
+        ballsBoard[pacmanPos.row][pacmanPos.col] = 0;
     }
 }
 
@@ -587,7 +620,7 @@ function initializeValues(){
     playTimeTwentyFiveBallAmount = settings.twentyFiveBallAmount;
     playTimeFifteenBallAmount = settings.fifteenBallAmount;
     playTimeFiveBallAmount = settings.fiveBallAmount;
-    playTimeTimeLimitation = settings.timeLimitation;
+    playTimeLimitation = settings.timeLimitation;
     score = 0;
     lives = 3;
     if(styleChanged){
@@ -599,7 +632,7 @@ function initializeValues(){
 function initializeBoard() {
     for (let index = 0; index < board.length; index++) {
         for (let j = 0; j < board[0].length; j++) {
-            if (board[index][j] != boardParams.wall) {
+            if (board[index][j] != boardParams.wall && board[index][j] != boardParams.clock) {
                 board[index][j] = boardParams.path;
             }
         }
