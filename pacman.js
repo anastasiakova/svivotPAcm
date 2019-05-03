@@ -147,37 +147,37 @@ var boardParams = {
 };
 var board = [
     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,4,4,4,4,0,0,0,4,4,4,4,0,0],
-    [0,0,0,0,0,4,0,0,0,4,0,0,0,0,0],
-    [0,0,0,4,4,0,0,0,0,4,4,4,0,0,0],
-    [0,0,0,0,0,0,0,4,4,4,0,0,0,0,0],
-    [0,0,4,0,4,0,0,0,0,4,0,0,4,4,0],
-    [0,0,4,0,0,0,0,0,0,4,0,0,0,4,0],
-    [0,0,4,0,0,0,4,4,0,0,0,0,0,4,0],
-    [0,4,4,0,0,4,4,0,0,0,0,0,0,4,0],
+    [0,0,4,0,0,0,4,0,0,4,4,4,4,0,0],
+    [0,0,0,0,0,0,4,0,0,0,0,4,0,0,0],
+    [0,4,0,0,4,0,0,0,0,0,0,4,0,0,0],
+    [0,4,0,0,0,0,0,4,4,0,0,0,0,0,0],
+    [0,4,0,0,4,0,0,0,0,0,0,0,4,4,0],
+    [0,0,0,4,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,4,0,0,4,0,0,4,0],
+    [0,0,4,0,0,4,4,0,0,0,4,0,0,0,0],
     [0,0,0,0,0,0,0,0,0,0,0,0,0,4,0],
-    [0,0,0,0,0,0,4,4,4,0,0,4,4,4,0],
-    [0,0,0,4,4,4,4,0,0,4,0,0,0,0,0],
-    [0,0,4,4,0,0,4,4,0,4,0,4,4,0,0],
-    [0,0,4,0,0,0,0,0,0,4,4,4,0,0,0],
-    [0,0,4,0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,4,0,4,0,4,4,0,0,4,0,4,0,4,0],
+    [0,4,0,4,0,4,0,0,0,4,0,0,0,0,0],
+    [0,4,0,0,0,0,4,4,0,4,0,4,4,4,0],
+    [0,0,0,0,0,0,0,0,0,4,0,4,0,0,0],
+    [0,0,4,0,0,4,0,0,0,0,0,0,0,0,0],
 ];
 var ballsBoard = [
     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,4,4,4,4,0,0,0,4,4,4,4,0,0],
-    [0,0,0,0,0,4,0,0,0,4,0,0,0,0,0],
-    [0,0,0,4,4,0,0,0,0,4,4,4,0,0,0],
-    [0,0,0,0,0,0,0,4,4,4,0,0,0,0,0],
-    [0,0,4,0,4,0,0,0,0,4,0,0,4,4,0],
-    [0,0,4,0,0,0,0,0,0,4,0,0,0,4,0],
-    [0,0,4,0,0,0,4,4,0,0,0,0,0,4,0],
-    [0,4,4,0,0,4,4,0,0,0,0,0,0,4,0],
+    [0,0,4,0,0,0,4,0,0,4,4,4,4,0,0],
+    [0,0,0,0,0,0,4,0,0,0,0,4,0,0,0],
+    [0,4,0,0,4,0,0,0,0,0,0,4,0,0,0],
+    [0,4,0,0,0,0,0,4,4,0,0,0,0,0,0],
+    [0,4,0,0,4,0,0,0,0,0,0,0,4,4,0],
+    [0,0,0,4,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,4,0,0,4,0,0,4,0],
+    [0,0,4,0,0,4,4,0,0,0,4,0,0,0,0],
     [0,0,0,0,0,0,0,0,0,0,0,0,0,4,0],
-    [0,0,0,0,0,0,4,4,4,0,0,4,4,4,0],
-    [0,0,0,4,4,4,4,0,0,4,0,0,0,0,0],
-    [0,0,4,4,0,0,4,4,0,4,0,4,4,0,0],
-    [0,0,4,0,0,0,0,0,0,4,4,4,0,0,0],
-    [0,0,4,0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,4,0,4,0,4,4,0,0,4,0,4,0,4,0],
+    [0,4,0,4,0,4,0,0,0,4,0,0,0,0,0],
+    [0,4,0,0,0,0,4,4,0,4,0,4,4,4,0],
+    [0,0,0,0,0,0,0,0,0,4,0,4,0,0,0],
+    [0,0,4,0,0,4,0,0,0,0,0,0,0,0,0],
 ];
 var score = 0;
 var lives = 3;
@@ -287,9 +287,11 @@ function createSmiley(center){
 }
 
 function putSmiley(){
-    var pos = getRandomPos();
-    board[pos.row][pos.col] = boardParams.smiley;
-    smileyPos = pos;
+    if(smileyPos == undefined || smileyPos.row !=-1){
+        var pos = getRandomPos();
+        board[pos.row][pos.col] = boardParams.smiley;
+        smileyPos = pos;
+    }
 }
 
 function putPacman(){
@@ -384,6 +386,8 @@ function Start(shouldGetNewTime = true) {
         start_time = new Date();        
         myAudio.play();
         initializeValues();
+        interval = setInterval(UpdatePosition, 250);
+        smileyPos = undefined;
     }
     createBoard();
     keysDown = {};
@@ -393,7 +397,6 @@ function Start(shouldGetNewTime = true) {
     addEventListener("keyup", function (e) {
         keysDown[e.key] = false;
     }, false);
-    interval = setInterval(UpdatePosition, 250);
 }
 
 /**
@@ -446,37 +449,37 @@ function UpdatePosition() {
     if (!lost){
         var origI = pacmanPos.row;
         var origJ = pacmanPos.col;
-        moveMonsters();
-
         var x = GetKeyPressed();
         movePacman(x);
-
         if(board[pacmanPos.row][pacmanPos.col] === boardParams.monster){
             getEaten();
         }
+        else{
+            updateScore(); 
+            board[origI][origJ] = 0;
+            ballsBoard[origI][origJ] = 0;
+            board[pacmanPos.row][pacmanPos.col] = 2;
+            if(smileyPos.row != -1){
+                moveSmiley();
+            }       
+            var currentTime = new Date();
+            time_remaining = (currentTime - start_time) / 1000;
 
-        updateScore();
+            if(settings.timeLimitation - time_remaining <= 10 && !styleChanged){
+                timeAlmostOver();
+            }
 
-        board[origI][origJ] = 0;
-        ballsBoard[origI][origJ] = 0;
-        board[pacmanPos.row][pacmanPos.col] = 2;
-        var currentTime = new Date();
-        time_remaining = (currentTime - start_time) / 1000;
-
-        if(settings.timeLimitation - time_remaining <= 10 && !styleChanged){
-            timeAlmostOver();
-        }
-
-        if (time_remaining >= settings.timeLimitation) {
-            timeOver();
-        }
-        
+            if (time_remaining >= settings.timeLimitation) {
+                timeOver();
+            }
+            moveMonsters();
+        }  
         if(lost){
-          onLost();
+            onLost();
         }
         else{
             Draw();
-        }   
+         } 
     }
 }
 
@@ -516,14 +519,19 @@ function updateScore(){
         playTimeTwentyFiveBallAmount--;
     }
     
-    if(board[pacmanPos.row][pacmanPos.col] === boardParams.fifteenBall){
+    else if(board[pacmanPos.row][pacmanPos.col] === boardParams.fifteenBall){
         score += 15;
         playTimeFifteenBallAmount--;
     }
 
-    if(board[pacmanPos.row][pacmanPos.col] === boardParams.fiveBall){
+    else if(board[pacmanPos.row][pacmanPos.col] === boardParams.fiveBall){
         score += 5;
         playTimeFiveBallAmount--;
+    }
+    if(board[pacmanPos.row][pacmanPos.col] === boardParams.smiley){
+        score += 50;
+        smileyPos = {row: -1, col: -1};
+        board[pacmanPos.row][pacmanPos.col] = 0;
     }
 }
 
@@ -549,25 +557,25 @@ function getEaten(){
 function movePacman(move){
     if (move === 1) {
         pacmanLastDiraction = 1;
-        if (pacmanPos.col > 0 && board[pacmanPos.row][pacmanPos.col - 1] !== 4) {
+        if (pacmanPos.col > 0 && board[pacmanPos.row][pacmanPos.col - 1] !== boardParams.wall) {
             pacmanPos.col--;
         }
     }
     if (move === 2) {
         pacmanLastDiraction = 2;
-        if (pacmanPos.col < 14 && board[pacmanPos.row][pacmanPos.col + 1] !== 4) {
+        if (pacmanPos.col < 14 && board[pacmanPos.row][pacmanPos.col + 1] !== boardParams.wall) {
             pacmanPos.col++;
         }
     }
     if (move === 3) {
         pacmanLastDiraction = 3;
-        if (pacmanPos.row > 0 && board[pacmanPos.row - 1][pacmanPos.col] !== 4) {
+        if (pacmanPos.row > 0 && board[pacmanPos.row - 1][pacmanPos.col] !== boardParams.wall) {
             pacmanPos.row--;
         }
     }
     if (move === 4) {
         pacmanLastDiraction = 4;
-        if (pacmanPos.row < 14 && board[pacmanPos.row + 1][pacmanPos.col] !== 4) {
+        if (pacmanPos.row < 14 && board[pacmanPos.row + 1][pacmanPos.col] !== boardParams.wall) {
             pacmanPos.row++;
         }
     }
@@ -597,55 +605,65 @@ function initializeBoard() {
 }
 
 function moveMonsters(){
-    if(Math.random() <= 0.5){
-        for (let i = 0; i < monstersPos.length; i++) {
-            var availbe = getAvailble(monstersPos[i]);
-            var rowDistance = monstersPos[i].row - pacmanPos.row;
-            var colDistance = monstersPos[i].col - pacmanPos.col;
-            var notChanged = true;
-            while(notChanged && availbe.length != 0){
-                var pos = availbe.pop();
-                var isBetter =  (rowDistance != 0  && Math.abs(rowDistance) > Math.abs(pos.row - pacmanPos.row)) ||
-                ( colDistance != 0 && Math.abs(colDistance) > Math.abs(pos.col - pacmanPos.col));
-                if(isBetter){               
+    for (let i = 0; i < monstersPos.length; i++) {
+        var availabe = getAvailable(monstersPos[i]);
+        var rowDistance = monstersPos[i].row - pacmanPos.row;
+        var colDistance = monstersPos[i].col - pacmanPos.col;
+        var notChanged = true;
+        while(notChanged && availabe.length != 0){
+            var pos = availabe.pop();
+            var isBetter =  (rowDistance != 0  && Math.abs(rowDistance) > Math.abs(pos.row - pacmanPos.row)) ||
+            (colDistance != 0 && Math.abs(colDistance) > Math.abs(pos.col - pacmanPos.col));
+            if(isBetter){                            
+                if(board[pos.row][pos.col] != boardParams.monster){
                     board[monstersPos[i].row][monstersPos[i].col] = ballsBoard[monstersPos[i].row][monstersPos[i].col];
-                    if(board[pos.row][pos.col] != boardParams.monster){
-                        monstersPos[i] = pos;
-                        board[monstersPos[i].row][monstersPos[i].col] = boardParams.monster;
-                        notChanged = false;
-                    }
+                    monstersPos[i] = pos;
+                    board[monstersPos[i].row][monstersPos[i].col] = boardParams.monster; 
+                    notChanged = false;
                 }
             }
-            if(notChanged && availbe.length == 0){
-                availbe = getAvailble(monstersPos[i]);
-                pos = availbe.pop();
-                board[monstersPos[i].row][monstersPos[i].col] = ballsBoard[monstersPos[i].row][monstersPos[i].col];
-                monstersPos[i] = pos;
-                board[monstersPos[i].row][monstersPos[i].col] = boardParams.monster; 
-            }
         }
-    }
+        if(notChanged && availabe.length == 0){
+            pos = moveRandom(monstersPos[i]);
+            board[monstersPos[i].row][monstersPos[i].col] = ballsBoard[monstersPos[i].row][monstersPos[i].col];
+            monstersPos[i] = pos;
+            board[monstersPos[i].row][monstersPos[i].col] = boardParams.monster; 
+        }
+    } 
 }
 
-function getAvailble(monster){
-    var availbe = [];
+function moveSmiley(){
+    var pos = moveRandom(smileyPos);
+    board[smileyPos.row][smileyPos.col] = ballsBoard[smileyPos.row][smileyPos.col];
+    smileyPos = pos;
+    board[smileyPos.row][smileyPos.col] = boardParams.smiley; 
+}
+
+function moveRandom(movingElement){
+   var available = getAvailable(movingElement);
+   var randomMove = Math.floor(Math.random() * available.length);
+   return available[randomMove];
+}
+
+function getAvailable(movingElement){
+    var availabe = [];
     //down
-    if(monster.row + 1 < 15 && board[monster.row + 1][monster.col] != boardParams.wall){
-            availbe.push({row: monster.row + 1, col: monster.col});
+    if(movingElement.row + 1 < 15 && board[movingElement.row + 1][movingElement.col] != boardParams.wall){
+            availabe.push({row: movingElement.row + 1, col: movingElement.col});
     }
     //up
-    if(monster.row - 1 >= 0 && board[monster.row - 1][monster.col] != boardParams.wall){
-            availbe.push({row: monster.row - 1, col: monster.col});
+    if(movingElement.row - 1 >= 0 && board[movingElement.row - 1][movingElement.col] != boardParams.wall){
+            availabe.push({row: movingElement.row - 1, col: movingElement.col});
     }
     //rigth
-    if(monster.col + 1 < 15 && board[monster.row][monster.col + 1] != boardParams.wall){
-            availbe.push({row: monster.row, col: monster.col + 1});
+    if(movingElement.col + 1 < 15 && board[movingElement.row][movingElement.col + 1] != boardParams.wall){
+            availabe.push({row: movingElement.row, col: movingElement.col + 1});
     }
     //low
-    if(monster.col - 1 >= 0 && board[monster.row][monster.col - 1] != boardParams.wall){
-            availbe.push({row: monster.row, col: monster.col - 1});
+    if(movingElement.col - 1 >= 0 && board[movingElement.row][movingElement.col - 1] != boardParams.wall){
+            availabe.push({row: movingElement.row, col: movingElement.col - 1});
     }
-    return availbe;
+    return availabe;
 }    
 
 function killGame(){
